@@ -1,30 +1,108 @@
-export const BASE_FONT = 16;
-export const BASE_LINE_HEIGHT = 16 * 1.5;
+import { colord } from 'colord';
+
+const BASE_FONT = 14;
+const BASE_LINE_HEIGHT = 14 * 1.5;
+
+const BASE_UNIT = 4;
 const text = {
   variations: {
+    small: {
+      fontSize: BASE_FONT * 0.8,
+      lineHeight: BASE_LINE_HEIGHT * 0.8,
+      fontFamily: 'Inter-Regular',
+    },
     base: {
       lineHeight: BASE_LINE_HEIGHT,
       fontSize: BASE_FONT,
-      fontFamily: 'Lexend-Regular',
+      fontFamily: 'Inter-Regular',
+    },
+
+    strong: {
+      lineHeight: BASE_LINE_HEIGHT,
+      fontSize: BASE_FONT,
+      fontFamily: 'Inter-Bold',
+    },
+    strongLarge: {
+      fontSize: BASE_FONT * 1.25,
+      lineHeight: BASE_LINE_HEIGHT * 1.25,
+      fontFamily: 'Inter-Bold',
     },
     header: {
       fontSize: BASE_FONT * 1.5,
       lineHeight: BASE_LINE_HEIGHT * 1.5,
-      fontFamily: 'Lexend-Bold',
+      fontFamily: 'Inter-Bold',
     },
   },
 };
 
+const colors = {
+  dark: '#272522',
+  greyLight: '#e2e5e5',
+  greyDark: '#9ba7aa',
+  red: '#d5394e',
+};
+
+const themeTokens = {
+  text: colors.greyDark,
+  textPrimary: colors.red,
+
+  border: colord(colors.dark).lighten(0.1).toHex(),
+
+  buttonPrimary: colors.red,
+  buttonPrimaryText: colors.greyLight,
+
+  buttonSecondary: colors.greyDark,
+  buttonSecondaryText: colors.dark,
+
+  background: colors.dark,
+  backgroundLighter: colord(colors.dark).lighten(0.1).toHex(),
+
+  surfacePaddingHorizontal: BASE_UNIT * 4,
+  surfacePaddingVertical: BASE_UNIT * 4,
+
+  radius: BASE_UNIT,
+
+  spacer: BASE_UNIT * 4,
+};
+
 export const theme = {
-  baseUnit: 4,
+  baseUnit: BASE_UNIT,
   text,
-  colors: {
-    primary: '#007AFF',
-    secondary: '#4CAF50',
-    error: '#F44336',
-    background: '#F5F5F5',
-    textPrimary: '#212121',
-    textSecondary: '#757575',
-    border: '#d3d3d3',
+  colors: colors,
+  tokens: themeTokens,
+  common: {
+    container: {
+      backgroundColor: colors.dark,
+      paddingHorizontal: BASE_UNIT * 4,
+      paddingVertical: BASE_UNIT * 4,
+    },
+    surfaceDimensions: {
+      borderRadius: themeTokens.radius,
+      paddingVertical: themeTokens.surfacePaddingVertical,
+      paddingHorizontal: themeTokens.surfacePaddingHorizontal,
+    },
+    input: {
+      borderWidth: 1,
+      borderColor: themeTokens.border,
+      backgroundColor: themeTokens.backgroundLighter,
+      color: themeTokens.buttonPrimaryText,
+    },
+  },
+  navigation: {
+    header: {
+      headerStyle: {
+        height: BASE_UNIT * 20,
+        backgroundColor: themeTokens.background,
+      },
+      headerShadowVisible: false, // applied here
+      headerTitleStyle: {
+        ...text.variations.header,
+        color: themeTokens.buttonPrimaryText,
+      },
+      headerBackTitleStyle: {
+        color: themeTokens.buttonPrimaryText,
+      },
+    },
   },
 };
+export type ThemeType = typeof theme;

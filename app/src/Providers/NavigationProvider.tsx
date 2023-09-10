@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavigationContainer as RNNavigationContainer} from '@react-navigation/native';
+import { NavigationContainer as RNNavigationContainer } from '@react-navigation/native';
 
 export const NavigationProvider: React.FC<React.PropsWithChildren> = ({
   children,

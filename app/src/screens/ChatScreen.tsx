@@ -1,42 +1,41 @@
 // app/src/screens/ChatScreen.tsx
-import React, {useState} from 'react';
-import {TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from '@emotion/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
-import {theme} from '../utils/theme';
-import {MessageBubble} from '../components/MessageBubble';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { MessageBubble } from '../components/MessageBubble';
+import { useTheme } from '@emotion/react';
 
-const ChatContainer = styled.View({
+const ChatContainer = styled.View(({ theme }) => ({
   flex: 1,
-  padding: 10,
-  backgroundColor: theme.colors.background,
-});
+  ...theme.common.container,
+}));
 
 const MessageLog = styled.ScrollView({
   flex: 1,
   marginBottom: 10,
 });
 
-const InputArea = styled.View({
+const InputArea = styled.View(({ theme }) => ({
   flexDirection: 'row',
   alignItems: 'center',
-  backgroundColor: 'white',
-  borderRadius: 25,
-  paddingHorizontal: 10,
-  paddingVertical: 5,
-});
+  ...theme.common.input,
+  paddingHorizontal: theme.common.surfaceDimensions.paddingHorizontal,
+}));
 
-const ChatInput = styled.TextInput(({theme}) => ({
+const ChatInput = styled.TextInput(({ theme }) => ({
   flex: 1,
   borderWidth: 0,
   borderColor: 'transparent',
-  borderRadius: 25,
-  padding: 10,
+  backgroundColor: 'transparent',
   ...theme.text.variations.base,
+  color: theme.common.input.color,
+  paddingVertical: theme.common.surfaceDimensions.paddingVertical,
 }));
 
 export const ChatScreen: React.FC = () => {
+  const theme = useTheme();
   const [message, setMessage] = useState('');
 
   // Sample chat log tailored for AI MatchMate application
@@ -46,18 +45,18 @@ export const ChatScreen: React.FC = () => {
         'Hello! Welcome to AI MatchMate. Ready to find your perfect match?',
       sent: false,
     },
-    {message: "Hi! Yes, I'm curious to see how this works.", sent: true},
+    { message: "Hi! Yes, I'm curious to see how this works.", sent: true },
     {
       message:
         "Great! Just answer a few questions and I'll find the best matches for you.",
       sent: false,
     },
-    {message: "Sounds interesting. Let's do it!", sent: true},
+    { message: "Sounds interesting. Let's do it!", sent: true },
     {
       message: 'Awesome! First, tell me about your favorite hobbies.',
       sent: false,
     },
-    {message: 'I love reading, hiking, and listening to music.', sent: true},
+    { message: 'I love reading, hiking, and listening to music.', sent: true },
     {
       message: 'Noted. And what qualities are you looking for in a match?',
       sent: false,
@@ -71,13 +70,13 @@ export const ChatScreen: React.FC = () => {
       message: 'Got it! Give me a moment to process this information.',
       sent: false,
     },
-    {message: 'Alright, take your time.', sent: true},
+    { message: 'Alright, take your time.', sent: true },
     {
       message:
         "Great news! I've found a few potential matches for you. Check them out in the 'Matches' tab.",
       sent: false,
     },
-    {message: 'Thanks! Excited to see my matches.', sent: true},
+    { message: 'Thanks! Excited to see my matches.', sent: true },
   ];
 
   return (
@@ -89,11 +88,7 @@ export const ChatScreen: React.FC = () => {
       </MessageLog>
 
       <InputArea>
-        <ChatInput
-          value={message}
-          onChangeText={setMessage}
-          placeholder="Type a message"
-        />
+        <ChatInput value={message} onChangeText={setMessage} />
         <TouchableOpacity
           onPress={() => {
             // TODO: Handle sending the message here
@@ -102,7 +97,7 @@ export const ChatScreen: React.FC = () => {
           <FontAwesomeIcon
             icon={faPaperPlane}
             size={20}
-            color={theme.colors.primary}
+            color={theme.common.input.color}
           />
         </TouchableOpacity>
       </InputArea>

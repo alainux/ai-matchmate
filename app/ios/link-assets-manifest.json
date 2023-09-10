@@ -2,12 +2,12 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/Lexend-Bold.ttf",
-      "sha1": "1a8d4599190b5057c425db5709a40c7ef03b1202"
+      "path": "assets/fonts/Inter-Bold.ttf",
+      "sha1": "48747b7a60086f97af0d373febcbd1f1bee87f17"
     },
     {
-      "path": "assets/fonts/Lexend-Regular.ttf",
-      "sha1": "bc33fa22827ac530e6bf64d3b6f412067f200d6f"
+      "path": "assets/fonts/Inter-Regular.ttf",
+      "sha1": "7237d9cf55f177702066a28a4dde1e4c7e8ab576"
     }
   ]
 }

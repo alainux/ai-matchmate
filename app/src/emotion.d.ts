@@ -1,4 +1,5 @@
 import '@emotion/react';
+import { ThemeType } from './utils/theme';
 
 declare module '@emotion/react' {
   type ThemeTextVariation = {
@@ -6,22 +7,5 @@ declare module '@emotion/react' {
     fontSize: number;
     fontFamily: string;
   };
-  export interface Theme {
-    baseUnit: number;
-    text: {
-      variations: {
-        base: ThemeTextVariation;
-        header: ThemeTextVariation;
-      };
-    };
-    colors: {
-      primary: string;
-      secondary: string;
-      error: string;
-      background: string;
-      textPrimary: string;
-      textSecondary: string;
-      border: string;
-    };
-  }
+  export interface Theme extends ThemeType {}
 }

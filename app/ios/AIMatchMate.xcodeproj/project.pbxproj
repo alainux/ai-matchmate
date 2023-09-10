@@ -12,10 +12,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		19AF15C89EA94857AF9DA618 /* Lexend-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B6370B617394587B7B82F2C /* Lexend-Bold.ttf */; };
+		18113D289F2C48628B436BA7 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 832F62B94F90454589B9CBA1 /* Inter-Bold.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-AIMatchMate-AIMatchMateTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AIMatchMate-AIMatchMateTests.a */; };
-		7E2AE83B4D5E49319479703C /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9745D388423940DF951B5F88 /* Lexend-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9EA78A825FEE4B5FB69E1E23 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2D96364752B4056B46396DA /* Inter-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,12 +41,12 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-AIMatchMate-AIMatchMateTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIMatchMate-AIMatchMateTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-AIMatchMate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIMatchMate.debug.xcconfig"; path = "Target Support Files/Pods-AIMatchMate/Pods-AIMatchMate.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-AIMatchMate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIMatchMate.release.xcconfig"; path = "Target Support Files/Pods-AIMatchMate/Pods-AIMatchMate.release.xcconfig"; sourceTree = "<group>"; };
-		5B6370B617394587B7B82F2C /* Lexend-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Lexend-Bold.ttf"; path = "../assets/fonts/Lexend-Bold.ttf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-AIMatchMate-AIMatchMateTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIMatchMate-AIMatchMateTests.debug.xcconfig"; path = "Target Support Files/Pods-AIMatchMate-AIMatchMateTests/Pods-AIMatchMate-AIMatchMateTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-AIMatchMate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AIMatchMate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AIMatchMate/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		832F62B94F90454589B9CBA1 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-AIMatchMate-AIMatchMateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AIMatchMate-AIMatchMateTests.release.xcconfig"; path = "Target Support Files/Pods-AIMatchMate-AIMatchMateTests/Pods-AIMatchMate-AIMatchMateTests.release.xcconfig"; sourceTree = "<group>"; };
-		9745D388423940DF951B5F88 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Lexend-Regular.ttf"; path = "../assets/fonts/Lexend-Regular.ttf"; sourceTree = "<group>"; };
+		B2D96364752B4056B46396DA /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -103,8 +103,8 @@
 		291969C3C9694FD58B000EAB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5B6370B617394587B7B82F2C /* Lexend-Bold.ttf */,
-				9745D388423940DF951B5F88 /* Lexend-Regular.ttf */,
+				832F62B94F90454589B9CBA1 /* Inter-Bold.ttf */,
+				B2D96364752B4056B46396DA /* Inter-Regular.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -259,8 +259,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				19AF15C89EA94857AF9DA618 /* Lexend-Bold.ttf in Resources */,
-				7E2AE83B4D5E49319479703C /* Lexend-Regular.ttf in Resources */,
+				18113D289F2C48628B436BA7 /* Inter-Bold.ttf in Resources */,
+				9EA78A825FEE4B5FB69E1E23 /* Inter-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,37 +1,40 @@
 // app/src/Layout/TabsLayout.tsx
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {ChatScreen} from '../screens/ChatScreen';
-import {MatchesScreen} from '../screens/MatchesScreen';
-import {ProfileScreen} from '../screens/ProfileScreen';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ChatScreen } from '../screens/ChatScreen';
+import { MatchesScreen } from '../screens/MatchesScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {
   faComment,
   faUserCircle,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
-import {theme} from '../utils/theme';
+import { theme } from '../utils/theme';
 
 const Tab = createBottomTabNavigator();
 
 export const TabsLayout: React.FC = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.textSecondary,
+      screenOptions={({ route }) => ({
+        // tabBarBackground: theme.tokens.background,
+        tabBarActiveTintColor: theme.tokens.textPrimary,
+        tabBarInactiveTintColor: theme.tokens.text,
         tabBarLabelStyle: {
-          fontFamily: 'Lexend-Regular', // Assuming you've linked Lexend properly.
-          fontSize: 12,
+          ...theme.text.variations.small,
         },
         tabBarStyle: {
-          borderTopColor: 'transparent',
           height: theme.baseUnit * 20,
-          paddingBottom: theme.baseUnit * 4,
-          paddingTop: theme.baseUnit * 4,
+          paddingBottom: theme.tokens.spacer,
+          paddingTop: theme.tokens.spacer,
+          backgroundColor: theme.tokens.background,
+          borderTopColor: 'transparent',
+          borderWidth: 0,
         },
+        ...theme.navigation.header,
         // eslint-disable-next-line react/no-unstable-nested-components
-        tabBarIcon: ({color, size}) => {
+        tabBarIcon: ({ color, size }) => {
           let iconName;
 
           if (route.name === 'Chat') {
@@ -52,18 +55,18 @@ export const TabsLayout: React.FC = () => {
       })}>
       <Tab.Screen
         name="Chat"
-        options={{headerTitle: 'AI MatchMate Chat'}}
+        options={{ headerTitle: 'AI MatchMate Chat' }}
         component={ChatScreen}
       />
       <Tab.Screen
         name="Matches"
         component={MatchesScreen}
-        options={{headerTitle: 'Your Matches'}}
+        options={{ headerTitle: 'Your Matches' }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{headerTitle: 'Your Profile'}}
+        options={{ headerTitle: 'Your Profile' }}
       />
     </Tab.Navigator>
   );

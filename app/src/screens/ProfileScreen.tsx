@@ -1,44 +1,41 @@
 // app/src/screens/ProfileScreen.tsx
 import styled from '@emotion/native';
-import React, {useState} from 'react';
-import {theme} from '../utils/theme';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faImage, faSave} from '@fortawesome/free-solid-svg-icons';
-import {Button} from '../components/Button';
+import React, { useState } from 'react';
+import { theme } from '../utils/theme';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faImage, faSave } from '@fortawesome/free-solid-svg-icons';
+import { Button } from '../components/Button';
 
 const ProfileContainer = styled.ScrollView({
   flex: 1,
-  padding: theme.baseUnit * 8,
-  backgroundColor: 'white',
+  ...theme.common.container,
 });
 
 const Label = styled.Text({
   marginBottom: theme.baseUnit,
-  color: theme.colors.textSecondary,
+  color: theme.tokens.text,
   ...theme.text.variations.base,
 });
 
 const Input = styled.TextInput({
-  borderWidth: 1,
-  borderColor: theme.colors.border,
-  borderRadius: theme.baseUnit,
-  paddingHorizontal: theme.baseUnit * 2,
-  paddingVertical: theme.baseUnit * 2,
-  marginBottom: theme.baseUnit * 2,
+  ...theme.common.input,
+
+  marginBottom: theme.tokens.spacer,
+
+  ...theme.common.surfaceDimensions,
   ...theme.text.variations.base,
-  lineHeight: 18,
 });
 
-const ProfileImage = styled.Image({
+const ProfileImage = styled.Image(({ theme }) => ({
   width: 120,
   height: 120,
   borderRadius: 60,
-  marginBottom: 15,
-});
+  marginBottom: theme.tokens.spacer,
+}));
 
 const Row = styled.View({
   flexDirection: 'row',
-  paddingVertical: theme.baseUnit * 4,
+  paddingVertical: theme.tokens.spacer,
   justifyContent: 'center',
   paddingHorizontal: 0,
   alignItems: 'center',
@@ -49,20 +46,18 @@ const Spacer = styled.View({
 });
 
 const BioInput = styled.TextInput({
-  borderWidth: 1,
-  borderColor: theme.colors.border,
-  borderRadius: 5,
-  padding: 10,
-  marginBottom: 15,
-  fontFamily: 'Lexend',
   height: 100,
   textAlignVertical: 'top',
+  marginBottom: theme.tokens.spacer,
+  ...theme.common.input,
+  ...theme.text.variations.base,
+  ...theme.common.surfaceDimensions,
 });
 
-const PhotoContainer = styled.View(({theme}) => ({
+const PhotoContainer = styled.View(({ theme }) => ({
   flexDirection: 'column',
-  alignItems: 'flex-start',
-  marginBottom: theme.baseUnit * 8,
+  alignItems: 'center',
+  marginBottom: theme.tokens.spacer,
 }));
 
 const PLACEHOLDER_IMAGE = 'https://picsum.photos/id/203/800/500.jpg';
@@ -79,14 +74,14 @@ export const ProfileScreen: React.FC = () => {
   return (
     <ProfileContainer>
       <PhotoContainer>
-        <ProfileImage source={{uri: profileImage}} />
+        <ProfileImage source={{ uri: profileImage }} />
 
         <Button
           icon={
             <FontAwesomeIcon
               icon={faImage}
               size={20}
-              color={theme.colors.primary}
+              color={theme.tokens.buttonSecondaryText}
             />
           }
           secondary
@@ -133,7 +128,7 @@ export const ProfileScreen: React.FC = () => {
             // TODO: Handle save profile logic here
           }}
           icon={<FontAwesomeIcon icon={faSave} size={20} color="white" />}
-          style={{marginLeft: theme.baseUnit}}>
+          style={{ marginLeft: theme.baseUnit }}>
           Save Profile
         </Button>
       </Row>

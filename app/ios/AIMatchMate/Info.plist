@@ -53,8 +53,8 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Lexend-Bold.ttf</string>
-		<string>Lexend-Regular.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

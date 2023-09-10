@@ -1,49 +1,45 @@
 import React from 'react';
-import {View, FlatList, TouchableOpacity} from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import styled from '@emotion/native';
-import {theme} from '../utils/theme';
-import {matchesData} from '../utils/data';
-import {useNavigation} from '../hooks/useNavigation';
+import { matchesData } from '../utils/data';
+import { useNavigation } from '../hooks/useNavigation';
 
-const MatchesContainer = styled.View({
+const MatchesContainer = styled.View(({ theme }) => ({
   flex: 1,
+  ...theme.common.container,
+}));
 
-  backgroundColor: 'white',
-});
-
-const MatchCard = styled(TouchableOpacity)({
+const MatchCard = styled(TouchableOpacity)(({ theme }) => ({
   flexDirection: 'row',
-  padding: theme.baseUnit * 4,
-  borderWidth: 1,
-  borderColor: theme.colors.border,
-  borderRadius: theme.baseUnit,
-  marginBottom: theme.baseUnit * 4,
-  alignItems: 'center',
-  backgroundColor: 'white',
-});
+  alignItems: 'flex-start',
+  ...theme.common.surfaceDimensions,
+  marginBottom: theme.tokens.spacer,
+  backgroundColor: theme.tokens.buttonSecondary,
+}));
 
-const MatchImage = styled.Image({
+const MatchImage = styled.Image(({ theme }) => ({
   width: 50,
   height: 50,
   borderRadius: 25,
-  marginRight: theme.baseUnit * 4,
-});
+  marginRight: theme.tokens.spacer,
+}));
 
-const MatchName = styled.Text({
-  color: theme.colors.textPrimary,
+const MatchName = styled.Text(({ theme }) => ({
+  flex: 1,
+  color: theme.tokens.buttonSecondaryText,
+  ...theme.text.variations.strongLarge,
+  marginBottom: theme.tokens.spacer,
+}));
+
+const MatchBio = styled.Text(({ theme }) => ({
+  color: theme.tokens.buttonSecondaryText,
   flex: 1,
   ...theme.text.variations.base,
-});
+}));
 
-const MatchBio = styled.Text({
-  color: theme.colors.textSecondary,
+const MatchContent = styled.View({
   flex: 1,
-  paddingRight: 50,
-  ...theme.text.variations.base,
 });
-
-const trimBio = (bio: string, n: number) =>
-  bio.length > n ? bio.substring(0, n) + '...' : bio;
 
 export const MatchesScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -53,19 +49,18 @@ export const MatchesScreen: React.FC = () => {
       <FlatList
         data={matchesData}
         keyExtractor={item => item.id}
-        contentContainerStyle={{padding: theme.baseUnit * 8}}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MatchCard
             onPress={() => {
-              navigation.navigate('MatchDetails', {match: item});
+              navigation.navigate('MatchDetails', { match: item });
             }}>
-            <MatchImage source={{uri: item.image}} />
-            <View>
+            <MatchImage source={{ uri: item.image }} />
+            <MatchContent>
               <MatchName>{item.name}</MatchName>
-              <MatchBio>{trimBio(item.bio, 18)}</MatchBio>
-            </View>
+              <MatchBio>{item.bio}</MatchBio>
+            </MatchContent>
           </MatchCard>
         )}
       />
