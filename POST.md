@@ -204,5 +204,42 @@ cd AIMatchMate
 
 For our app, we'll require a few crucial libraries:
 
-1. Install Amplify libraries:
+1. Install React Navigation for handling in-app navigation. Then, for detailed installation and linking instructions, especially for platforms like iOS which might require pod installations, follow the official [React Navigation getting started guide](https://reactnavigation.org/docs/getting-started/).
+
+```bash
+npm install @react-navigation/native @react-navigation/stack
+```
+
+2. To style our components, we'll use Emotion. Install the necessary libraries for Emotion in React Native:
+
+```bash
+npm install @emotion/react @emotion/native
+```
+
+#### Step 3: AWS Configuration
+
+1. Install the AWS CLI. Follow the official guide for your specific OS.
+
+2. Configure the AWS CLI with your credentials:
+
+```bash
+aws configure
+``` 
+
+Enter your AWS Access Key, Secret Key, preferred region, and desired output format when prompted.
+
+#### Step 4: Initialize Amplify in your Project
+
+1. Install Amplify CLI:
+
+```bash
+npm install -g @aws-amplify/cli
+```
+
+2. Initialize Amplify inside your React Native project:
+
+```bash
+amplify init
+```
+
 
