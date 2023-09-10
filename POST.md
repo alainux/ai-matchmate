@@ -172,13 +172,17 @@ A fixed toolbar at the bottom of the screen, housing icons/buttons for the prima
 - **Description**: Accessible after tapping a match. Displays the match's name, profile picture, and chat snippet. The central feature is the contact information section, showcasing the matched user's preferred contact method, urging users to communicate outside AI MatchMate.
 - **Interactions**: A clear "Back" or "Return" button ensures users can navigate back to the Matches Screen.
 
-
-
 #### Associations & Flow:
 
 - The Splash Screen naturally leads users to the Onboarding/Chat Interface.
 - The bottom toolbar navigation ensures users can seamlessly switch between Chat, Profile, and Matches, providing an interconnected and fluid user experience.
 
+#### UI Diagram 
+
+The following diagram demonstrates the above concepts and discussed screens:
+
+![image](https://github.com/alainux/ai-matchmate/assets/6836149/390257e5-142d-45b4-bcfb-f821baff1988)
+![image](https://github.com/alainux/ai-matchmate/assets/6836149/8d9fd8cd-fd26-48ca-a429-2e1520d0629a)
 
 ## Development Process
 
