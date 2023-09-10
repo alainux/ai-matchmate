@@ -10,6 +10,11 @@
       "StackName": "amplify-aimatchmate-dev-212515",
       "StackId": "arn:aws:cloudformation:eu-north-1:924718294120:stack/amplify-aimatchmate-dev-212515/c6148870-500f-11ee-b2fd-0a40b8bbe2ba",
       "AmplifyAppId": "d2h0s6zumgmuz1"
+    },
+    "categories": {
+      "auth": {
+        "aimatchmatea44634ee": {}
+      }
     }
   }
 }

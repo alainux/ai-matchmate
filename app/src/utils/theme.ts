@@ -16,7 +16,6 @@ const text = {
       fontSize: BASE_FONT,
       fontFamily: 'Inter-Regular',
     },
-
     strong: {
       lineHeight: BASE_LINE_HEIGHT,
       fontSize: BASE_FONT,
@@ -52,7 +51,7 @@ const themeTokens = {
   buttonPrimaryText: colors.greyLight,
 
   buttonSecondary: colors.greyDark,
-  buttonSecondaryText: colors.dark,
+  buttonSecondaryText: colors.greyDark,
 
   background: colors.dark,
   backgroundLighter: colord(colors.dark).lighten(0.1).toHex(),

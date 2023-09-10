@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faImage, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../components/Button';
 import { useTheme } from '@emotion/react';
+import { SignOutButton } from '../components/SignOutButton';
 
 const ProfileContainer = styled.ScrollView(({ theme }) => ({
   flex: 1,
@@ -129,10 +130,12 @@ export const ProfileScreen: React.FC = () => {
             // TODO: Handle save profile logic here
           }}
           icon={<FontAwesomeIcon icon={faSave} size={20} color="white" />}
-          style={{ marginLeft: theme.baseUnit }}>
+          style={{ marginRight: theme.tokens.spacer }}>
           Save Profile
         </Button>
+        <SignOutButton />
       </Row>
+
       <Spacer />
     </ProfileContainer>
   );

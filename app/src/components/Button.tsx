@@ -13,9 +13,11 @@ const StyledButton: React.FC<
   borderRadius: theme.tokens.radius,
   paddingHorizontal: theme.tokens.surfacePaddingHorizontal,
   paddingVertical: theme.tokens.surfacePaddingVertical,
-  backgroundColor: secondary
+  backgroundColor: secondary ? 'transparent' : theme.tokens.buttonPrimary,
+  borderColor: secondary
     ? theme.tokens.buttonSecondary
     : theme.tokens.buttonPrimary,
+  borderWidth: 1,
 }));
 
 const ButtonText: React.FC<
@@ -25,7 +27,7 @@ const ButtonText: React.FC<
     ? theme.tokens.buttonSecondaryText
     : theme.tokens.buttonPrimaryText,
   marginLeft: 10,
-  fontFamily: 'Lexend-Regular',
+  ...theme.text.variations.base,
 }));
 
 export const Button: React.FC<
