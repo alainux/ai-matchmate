@@ -450,9 +450,28 @@ How do you want users to be able to sign in? Email
 Do you want to configure advanced settings? No, I am done.
 ```
 
+For now, we will just use email and password authentication.
 Amplify includes some React Native specific UI components you'll use to build your app. Install it with the following command:
-
 
 ```sh
 npm install @aws-amplify/ui-react-native react-native-safe-area-context react-native-get-random-values react-native-url-polyfill
 ```
+
+##### Add AuthenticatorProvider
+
+In order to work with Amplify auth, we need to implement the higher order functions that they provide. For this, we will create a **AuthenticatorProvider.tsx** file that contains the necessary components and the theme overrides we need in order to implement the Amplify UI.
+
+https://github.com/alainux/ai-matchmate/blob/2b0ca490d8c005ecd213bc76c585a56e05baae09/app/src/Providers/AuthenticatorProvider.tsx#L1-L115
+
+<img width="1462" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/a5badedf-a3bb-491d-bab7-caec7aebb79d">
+
+<img width="1270" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/6666fa18-2496-4c2e-80bc-a139e11b822c">
+
+<img width="1315" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/3ee459c6-b736-4aab-9636-5f8076001217">
+
+
+
+
+
+
+
