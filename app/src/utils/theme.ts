@@ -102,6 +102,7 @@ export const theme = {
       headerBackTitleStyle: {
         color: themeTokens.buttonPrimaryText,
       },
+      headerTintColor: themeTokens.buttonPrimary,
     },
   },
 };

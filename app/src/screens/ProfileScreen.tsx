@@ -1,30 +1,30 @@
 // app/src/screens/ProfileScreen.tsx
 import styled from '@emotion/native';
 import React, { useState } from 'react';
-import { theme } from '../utils/theme';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faImage, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '../components/Button';
+import { useTheme } from '@emotion/react';
 
-const ProfileContainer = styled.ScrollView({
+const ProfileContainer = styled.ScrollView(({ theme }) => ({
   flex: 1,
   ...theme.common.container,
-});
+}));
 
-const Label = styled.Text({
+const Label = styled.Text(({ theme }) => ({
   marginBottom: theme.baseUnit,
   color: theme.tokens.text,
   ...theme.text.variations.base,
-});
+}));
 
-const Input = styled.TextInput({
+const Input = styled.TextInput(({ theme }) => ({
   ...theme.common.input,
 
   marginBottom: theme.tokens.spacer,
 
   ...theme.common.surfaceDimensions,
   ...theme.text.variations.base,
-});
+}));
 
 const ProfileImage = styled.Image(({ theme }) => ({
   width: 120,
@@ -33,26 +33,26 @@ const ProfileImage = styled.Image(({ theme }) => ({
   marginBottom: theme.tokens.spacer,
 }));
 
-const Row = styled.View({
+const Row = styled.View(({ theme }) => ({
   flexDirection: 'row',
   paddingVertical: theme.tokens.spacer,
   justifyContent: 'center',
   paddingHorizontal: 0,
   alignItems: 'center',
-});
+}));
 
 const Spacer = styled.View({
   height: 100,
 });
 
-const BioInput = styled.TextInput({
+const BioInput = styled.TextInput(({ theme }) => ({
   height: 100,
   textAlignVertical: 'top',
   marginBottom: theme.tokens.spacer,
   ...theme.common.input,
   ...theme.text.variations.base,
   ...theme.common.surfaceDimensions,
-});
+}));
 
 const PhotoContainer = styled.View(({ theme }) => ({
   flexDirection: 'column',
@@ -63,6 +63,7 @@ const PhotoContainer = styled.View(({ theme }) => ({
 const PLACEHOLDER_IMAGE = 'https://picsum.photos/id/203/800/500.jpg';
 
 export const ProfileScreen: React.FC = () => {
+  const theme = useTheme();
   const [name, setName] = useState('John Doe');
   const [email, setEmail] = useState('johndoe@example.com');
   const [contactInfo, setContactInfo] = useState('Telegram: @john_doe');
