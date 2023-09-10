@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Lexend-Bold.ttf",
+      "sha1": "1a8d4599190b5057c425db5709a40c7ef03b1202"
+    },
+    {
+      "path": "assets/fonts/Lexend-Regular.ttf",
+      "sha1": "bc33fa22827ac530e6bf64d3b6f412067f200d6f"
+    }
+  ]
+}

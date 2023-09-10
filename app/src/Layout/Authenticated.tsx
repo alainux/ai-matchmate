@@ -1,12 +1,6 @@
-import {TabsLayout} from './Tabs';
+import React from 'react';
+import {RootStack} from './RootStack';
 
-export const AuthenticatedLayout: React.FC<React.PropsWithChildren> = ({
-  children,
-}) => {
-  return (
-    <>
-      {children}
-      <TabsLayout />
-    </>
-  );
+export const AuthenticatedLayout: React.FC = () => {
+  return <RootStack />;
 };

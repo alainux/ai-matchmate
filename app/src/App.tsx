@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import {} from '@react-navigation/native';
 import {Providers} from './Providers';
