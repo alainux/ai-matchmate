@@ -214,15 +214,43 @@ For our app, we'll require a few crucial libraries:
 npm install @react-navigation/native @react-navigation/stack
 ```
 
-2. To style our components, we'll use Emotion. Install the necessary libraries for Emotion in React Native:
+2. To style our components, we'll use [Emotion](https://emotion.sh/docs/@emotion/native). Install the necessary libraries for Emotion in React Native:
 
 ```bash
 npm install @emotion/react @emotion/native
 ```
 
+3. Install FontAwesome for using SVG vector icons in our app:
+
+```bash
+npm i --save react-native-svg @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons  @fortawesome/react-native-fontawesome
+```
+
+4. Adding the Lexend Google Font
+
+    1. Download the **.ttf** font files for Inter (Regular and Bold) from the Google Fonts website.
+    2. Create an **assets/fonts/** directory in your app's root.
+    3. Place the downloaded .ttf files into **assets/fonts/**.
+    3. Create a **react-native-config.js** file in the root with the following
+    ```
+    module.exports = {
+        project: {
+            ios: {},
+            android: {},
+        },
+        assets: ['./assets/fonts'],
+    };
+    ```
+    4. To link the fonts into your React Native project, run:
+        
+    ```bash
+    npx react-native-asset 
+    ```
+
+
 #### Step 3: AWS Configuration
 
-1. Install the AWS CLI. Follow the official guide for your specific OS.
+1. Install the AWS CLI. Follow [the official guide](https://aws.amazon.com/cli/) for your specific OS.
 
 2. Configure the AWS CLI with your credentials:
 
@@ -234,10 +262,16 @@ Enter your AWS Access Key, Secret Key, preferred region, and desired output form
 
 #### Step 4: Initialize Amplify in your Project
 
-1. Install Amplify CLI:
+1. Install Amplify CLI. Follow the [official React Native instructions](https://docs.amplify.aws/start/getting-started/setup/q/integration/react-native):
 
 ```bash
 npm install -g @aws-amplify/cli
+```
+
+2. Install amplify's related libraries
+
+```bash
+npm install aws-amplify amazon-cognito-identity-js @react-native-community/netinfo @react-native-async-storage/async-storage
 ```
 
 2. Initialize Amplify inside your React Native project:
@@ -247,3 +281,21 @@ amplify init
 ```
 
 
+### Laying out the UI
+
+#### 1. Establish a directory structure:
+
+A neat structure with directories for screens, components, layouts, providers, and utilities keeps everything organized.
+
+```
+app/
+├── components/
+├── layouts/
+├── providers/
+├── screens/
+└── utils/
+``` 
+
+#### 2. Implement the theme:
+
+The theme.ts in the utils/ directory consolidates the font styles, color palette, and standard spacing values.
