@@ -1,0 +1,207 @@
+From 9b055abd4005b0132ecff897e5198ac6b1fed1ac Mon Sep 17 00:00:00 2001
+From: Alain Forte <alain.forte@c.teamexos.com>
+Date: Sun, 10 Sep 2023 14:13:46 +0200
+Subject: [PATCH 1/2] Add react-navigation
+
+---
+ app/src/App.tsx                  | 14 ++++++++++++++
+ app/src/Providers/Navigation.tsx |  8 ++++++++
+ app/src/Providers/index.tsx      |  6 ++++++
+ 3 files changed, 28 insertions(+)
+ create mode 100644 app/src/App.tsx
+ create mode 100644 app/src/Providers/Navigation.tsx
+ create mode 100644 app/src/Providers/index.tsx
+
+diff --git a/app/src/App.tsx b/app/src/App.tsx
+new file mode 100644
+index 0000000..30709d8
+--- /dev/null
++++ b/app/src/App.tsx
+@@ -0,0 +1,14 @@
++import * as React from 'react';
++import {} from '@react-navigation/native';
++import {Providers} from './Providers';
++import {Text, View} from 'react-native';
++
++export default function App() {
++  return (
++    <Providers>
++      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
++        <Text>No content yet.</Text>
++      </View>
++    </Providers>
++  );
++}
+diff --git a/app/src/Providers/Navigation.tsx b/app/src/Providers/Navigation.tsx
+new file mode 100644
+index 0000000..c5b71fa
+--- /dev/null
++++ b/app/src/Providers/Navigation.tsx
+@@ -0,0 +1,8 @@
++import * as React from 'react';
++import {NavigationContainer as RNNavigationContainer} from '@react-navigation/native';
++
++const NavigationProvider: React.FC<React.PropsWithChildren> = ({children}) => {
++  return <RNNavigationContainer>{children}</RNNavigationContainer>;
++};
++
++export {NavigationProvider};
+diff --git a/app/src/Providers/index.tsx b/app/src/Providers/index.tsx
+new file mode 100644
+index 0000000..1992185
+--- /dev/null
++++ b/app/src/Providers/index.tsx
+@@ -0,0 +1,6 @@
++import React from 'react';
++import {NavigationProvider} from './Navigation';
++
++export const Providers: React.FC<React.PropsWithChildren> = ({children}) => {
++  return <NavigationProvider>{children}</NavigationProvider>;
++};
+-- 
+2.39.2 (Apple Git-143)
+
+
+From e0323b742ca8c136f2db496c7fa7617d8df216a0 Mon Sep 17 00:00:00 2001
+From: Alain Forte <alain.forte@c.teamexos.com>
+Date: Sun, 10 Sep 2023 14:46:29 +0200
+Subject: [PATCH 2/2] Implements basic screens
+
+---
+ app/src/App.tsx                   |  6 ++----
+ app/src/Layout/Authenticated.tsx  | 12 ++++++++++++
+ app/src/Layout/Tabs.tsx           | 20 ++++++++++++++++++++
+ app/src/screens/ChatScreen.tsx    | 13 +++++++++++++
+ app/src/screens/MatchesScreen.tsx | 12 ++++++++++++
+ app/src/screens/ProfileScreen.tsx | 13 +++++++++++++
+ 6 files changed, 72 insertions(+), 4 deletions(-)
+ create mode 100644 app/src/Layout/Authenticated.tsx
+ create mode 100644 app/src/Layout/Tabs.tsx
+ create mode 100644 app/src/screens/ChatScreen.tsx
+ create mode 100644 app/src/screens/MatchesScreen.tsx
+ create mode 100644 app/src/screens/ProfileScreen.tsx
+
+diff --git a/app/src/App.tsx b/app/src/App.tsx
+index 30709d8..872e15e 100644
+--- a/app/src/App.tsx
++++ b/app/src/App.tsx
+@@ -1,14 +1,12 @@
+ import * as React from 'react';
+ import {} from '@react-navigation/native';
+ import {Providers} from './Providers';
+-import {Text, View} from 'react-native';
++import {AuthenticatedLayout} from './Layout/Authenticated';
+ 
+ export default function App() {
+   return (
+     <Providers>
+-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+-        <Text>No content yet.</Text>
+-      </View>
++      <AuthenticatedLayout />
+     </Providers>
+   );
+ }
+diff --git a/app/src/Layout/Authenticated.tsx b/app/src/Layout/Authenticated.tsx
+new file mode 100644
+index 0000000..be6c18f
+--- /dev/null
++++ b/app/src/Layout/Authenticated.tsx
+@@ -0,0 +1,12 @@
++import {TabsLayout} from './Tabs';
++
++export const AuthenticatedLayout: React.FC<React.PropsWithChildren> = ({
++  children,
++}) => {
++  return (
++    <>
++      {children}
++      <TabsLayout />
++    </>
++  );
++};
+diff --git a/app/src/Layout/Tabs.tsx b/app/src/Layout/Tabs.tsx
+new file mode 100644
+index 0000000..3607712
+--- /dev/null
++++ b/app/src/Layout/Tabs.tsx
+@@ -0,0 +1,20 @@
++// layouts/MyTabs.tsx
++import React from 'react';
++import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
++import {ChatScreen} from '../screens/ChatScreen';
++import {ProfileScreen} from '../screens/ProfileScreen';
++import {MatchesScreen} from '../screens/MatchesScreen';
++
++const Tab = createBottomTabNavigator();
++
++const TabsLayout: React.FC = () => {
++  return (
++    <Tab.Navigator>
++      <Tab.Screen name="Chat" component={ChatScreen} />
++      <Tab.Screen name="Profile" component={ProfileScreen} />
++      <Tab.Screen name="Matches" component={MatchesScreen} />
++    </Tab.Navigator>
++  );
++};
++
++export {TabsLayout};
+diff --git a/app/src/screens/ChatScreen.tsx b/app/src/screens/ChatScreen.tsx
+new file mode 100644
+index 0000000..5bf97b2
+--- /dev/null
++++ b/app/src/screens/ChatScreen.tsx
+@@ -0,0 +1,13 @@
++// screens/ChatScreen.tsx
++import React from 'react';
++import {View, Text} from 'react-native';
++
++const ChatScreen: React.FC = () => {
++  return (
++    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
++      <Text>This is the Chat screen</Text>
++    </View>
++  );
++};
++
++export {ChatScreen};
+diff --git a/app/src/screens/MatchesScreen.tsx b/app/src/screens/MatchesScreen.tsx
+new file mode 100644
+index 0000000..c9a4b4f
+--- /dev/null
++++ b/app/src/screens/MatchesScreen.tsx
+@@ -0,0 +1,12 @@
++import {View, Text} from 'react-native';
++
++// screens/MatchesScreen.tsx
++const MatchesScreen: React.FC = () => {
++  return (
++    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
++      <Text>This is the Matches screen</Text>
++    </View>
++  );
++};
++
++export {MatchesScreen};
+diff --git a/app/src/screens/ProfileScreen.tsx b/app/src/screens/ProfileScreen.tsx
+new file mode 100644
+index 0000000..b13d845
+--- /dev/null
++++ b/app/src/screens/ProfileScreen.tsx
+@@ -0,0 +1,13 @@
++// screens/ChatScreen.tsx
++import React from 'react';
++import {View, Text} from 'react-native';
++
++const ProfileScreen: React.FC = () => {
++  return (
++    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
++      <Text>This is the Profile screen</Text>
++    </View>
++  );
++};
++
++export {ProfileScreen};
+-- 
+2.39.2 (Apple Git-143)
+
