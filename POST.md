@@ -407,3 +407,9 @@ With Emotion's styled-components approach, styling components becomes modular an
 
 Building a robust and efficient backend is crucial for our AI-driven matchmaker application. We need a reliable system to manage user data, handle the AI matching process, and store potential matches for each user.
 
+#### 1. Configure Amplify
+
+Add the required Amplify configuration so that we can start building the basic backend integration.
+
+https://github.com/alainux/ai-matchmate/blob/77b3550749496c85adcceadd95104a5fcc2d7b75/app/index.js#L8-L11
+
