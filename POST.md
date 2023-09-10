@@ -278,8 +278,31 @@ npm install aws-amplify amazon-cognito-identity-js @react-native-community/netin
 
 2. Initialize Amplify inside your React Native project:
 
-```bash
-amplify init
+```sh
+% amplify init        
+Note: It is recommended to run this command from the root of your app directory
+? Enter a name for the project aimatchmate
+The following configuration will be applied:
+
+Project information
+| Name: aimatchmate
+| Environment: dev
+| Default editor: Visual Studio Code
+| App type: javascript
+| Javascript framework: react-native
+| Source Directory Path: src
+| Distribution Directory Path: /
+| Build Command: npm run-script build
+| Start Command: npm run-script start
+
+? Initialize the project with the above configuration? Yes
+Using default provider  awscloudformation
+? Select the authentication method you want to use: AWS profile
+
+For more information on AWS Profiles, see:
+https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+
+? Please choose the profile you want to use: amplify
 ```
 
 
@@ -413,3 +436,23 @@ Add the required Amplify configuration so that we can start building the basic b
 
 https://github.com/alainux/ai-matchmate/blob/77b3550749496c85adcceadd95104a5fcc2d7b75/app/index.js#L8-L11
 
+#### 2. Add auth
+
+Amplify provides authentication modules out-of-the-box. By running the above command, you can configure and add authentication to your project.
+
+```sh
+% amplify add auth
+Using service: Cognito, provided by: awscloudformation
+The current configured provider is Amazon Cognito. 
+Do you want to use the default authentication and security configuration? Default configuration
+Warning: you will not be able to edit these selections. 
+How do you want users to be able to sign in? Email
+Do you want to configure advanced settings? No, I am done.
+```
+
+Amplify includes some React Native specific UI components you'll use to build your app. Install it with the following command:
+
+
+```sh
+npm install @aws-amplify/ui-react-native react-native-safe-area-context react-native-get-random-values react-native-url-polyfill
+```
