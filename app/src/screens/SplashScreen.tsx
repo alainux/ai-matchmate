@@ -13,7 +13,7 @@ const Container = styled.View(({ theme }) => ({
 }));
 
 const StyledText = styled.Text(({ theme }) => ({
-  color: theme.tokens.textPrimary,
+  color: theme.tokens.buttonPrimaryText,
   ...theme.text.variations.header,
 }));
 
