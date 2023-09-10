@@ -299,3 +299,56 @@ app/
 #### 2. Implement the theme:
 
 The theme.ts in the utils/ directory consolidates the font styles, color palette, and standard spacing values.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/utils/theme.ts#L1-L108
+
+#### 3. Design the splash screen:
+
+The SplashScreen.tsx serves as the first touchpoint for users.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/screens/SplashScreen.tsx#L1-L39
+
+#### 4. Tab navigation:
+
+The TabsLayout.tsx handles bottom tab navigation, with tabs for Chat, Matches, and Profile.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/Layout/TabsLayout.tsx#L1-L73
+
+#### 5. Root stack navigation:
+
+The RootLayout.tsx file acts as the central navigation system, transitioning from the SplashScreen to the TabsLayout upon initialization. We will deliver is from Authenticated.tsx, which will become our main entry point after the user has logged in.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/Layout/Authenticated.tsx#L1-L6
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/Layout/RootStack.tsx#L1-L42
+
+### Creating the Screens
+
+#### 1. Chat Screen:
+
+The ChatScreen.tsx fosters interaction between the user and the matchmaker bot. This space is designed for intuitive chat flow.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/screens/ChatScreen.tsx#L1-L106
+
+#### 2. Matches Screen:
+
+MatchesScreen.tsx presents potential matches, with each card navigating to a detailed view upon interaction.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/screens/MatchesScreen.tsx#L1-L69
+
+#### 3. Match Details Screen:
+
+MatchDetailsScreen.tsx offers a deeper look into matches, showcasing a detailed bio, name, profile image, and contact information.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/screens/MatchDetailsScreen.tsx#L1-L67
+
+#### 4. Profile Screen:
+The ProfileScreen.tsx allows users to view and edit their profile, providing fields for name, email, bio, contact details, and a profile image.
+
+https://github.com/alainux/ai-matchmate/blob/75fd18dbffbaff0f0e1582998a0a76d5938057f6/app/src/screens/ProfileScreen.tsx#L1-L138
+
+### Final Styling Touches
+
+With Emotion's styled-components approach, styling components becomes modular and clean. Coupled with FontAwesome icons and the Inter font, the design remains consistent and elegant across all screens.
+
+
