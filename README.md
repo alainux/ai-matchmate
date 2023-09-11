@@ -486,10 +486,93 @@ Use a Cognito user pool configured as a part of this project.
 ✅ GraphQL schema compiled successfully.
 ```
 
+
+
+
 ##### Defining the schema
 
 Amplify will create a schema.graphql file within the `amplify/backend/api/{yourApiName}/` directory. This is where you'll define your data types and relationships.
 
 https://github.com/alainux/ai-matchmate/blob/807d37e4b6c04bcf4e1346c1985569a215047b10/app/amplify/backend/api/aimatchmate/schema.graphql#L1-L37
 
+This schema will add the required models **Profile**, **Match**, and **ChatMessage** and their required authentication directives based on the AWS syntax, which can be referred to from the [official docs](https://docs.amplify.aws/cli/graphql/data-modeling/).
+
+##### Creating Profile items during Cognito signup 
+
+For this we are going to make use of Cognito hooks which are lambda functions invoked on particular steps. It is fairly easy to generate them utilizing the Amplify CLI.
+
+```sh
+% amplify update auth
+Please note that certain attributes may not be overwritten if you choose to use defaults settings.
+Using service: Cognito, provided by: awscloudformation
+ What do you want to do? Walkthrough all the auth configurations
+ Select the authentication/authorization services that you want to use: User Sign-Up, Sign-In, connected
+ with AWS IAM controls (Enables per-user Storage features for images or other content, Analytics, and mo
+re)
+ Allow unauthenticated logins? (Provides scoped down permissions that you can control via AWS IAM) No
+ Do you want to enable 3rd party authentication providers in your identity pool? No
+ Do you want to add User Pool Groups? No
+ Do you want to add an admin queries API? No
+ Multifactor authentication (MFA) user login options: OFF
+ Email based user registration/forgot password: Enabled (Requires per-user email entry at registration)
+ Specify an email verification subject: Your verification code
+ Specify an email verification message: Your verification code is {####}
+ Do you want to override the default password policy for this User Pool? No
+ Specify the app's refresh token expiration period (in days): 30
+ Do you want to specify the user attributes this app can read and write? No
+ Do you want to enable any of the following capabilities? 
+ Do you want to use an OAuth flow? No
+? Do you want to configure Lambda Triggers for Cognito? Yes
+? Which triggers do you want to enable for Cognito Pre Sign-up
+? What functionality do you want to use for Pre Sign-up Create your own module
+✅ Successfully added resource aimatchmateXXXXPreSignup locally.
+```
+
+This will create a lambda function for your Pre-Signup stage and prompt you to edit it. For the code, we are going to call the GraphQL API to create the resource, but before, we need to give the lambda function access to the API, so we will execute the following: 
+
+```sh
+% amplify update function 
+? Select the Lambda function you want to update aimatchmate57a5e807PreSignup
+General information
+- Name: aimatchmate57a5e807PreSignup
+- Runtime: nodejs
+
+Resource access permission
+- Not configured
+
+Scheduled recurring invocation
+- Not configured
+
+Lambda layers
+- Not configured
+
+Environment variables:
+- Not configured
+
+Secrets configuration
+- Not configured
+
+? Which setting do you want to update? Resource access permissions
+? Select the categories you want this function to have access to. api
+? Select the operations you want to permit on aimatchmate Mutation
+
+You can access the following resource attributes as environment variables from your Lambda function
+	API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT
+	API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT
+	API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT
+```
+
+This will prompt you to the same file, which you can now edit. Take note of the used environment variables.
+
+https://github.com/alainux/ai-matchmate/blob/a1fdc76075fb56c8d54ff8cb55d53b9a8b3ce664/app/amplify/backend/function/aimatchmate57a5e807PreSignup/src/custom.js#L1-L71
+
+We can now register with the app and we will see a user being created in the AWS Cognito dashboard. We will also be able to get the corresponding user profile for that user.
+
+##### Updating ProfileScreen.tsx
+
+Now that we are able to read and update our profiles, we will go ahead and edit ProfileScreen.tsx:
+
+https://github.com/alainux/ai-matchmate/blob/a1fdc76075fb56c8d54ff8cb55d53b9a8b3ce664/app/src/screens/ProfileScreen.tsx#L1-L222
+
+<img width="1290" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/93697ff5-80cc-4ba4-b793-cc2412d7f2d9">
 
