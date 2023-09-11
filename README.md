@@ -490,4 +490,6 @@ Use a Cognito user pool configured as a part of this project.
 
 Amplify will create a schema.graphql file within the `amplify/backend/api/{yourApiName}/` directory. This is where you'll define your data types and relationships.
 
+https://github.com/alainux/ai-matchmate/blob/807d37e4b6c04bcf4e1346c1985569a215047b10/app/amplify/backend/api/aimatchmate/schema.graphql#L1-L37
+
 
