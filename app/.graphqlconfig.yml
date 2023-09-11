@@ -1,0 +1,15 @@
+projects:
+  aimatchmate:
+    schemaPath: amplify/backend/api/aimatchmate/build/schema.graphql
+    includes:
+      - src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/types/graphql.ts
+        docsFilePath: src/graphql
+extensions:
+  amplify:
+    version: 3

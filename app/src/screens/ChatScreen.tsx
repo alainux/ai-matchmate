@@ -1,11 +1,11 @@
-// app/src/screens/ChatScreen.tsx
+import styled from '@emotion/native';
+import { useTheme } from '@emotion/react';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import styled from '@emotion/native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { MessageBubble } from '../components/MessageBubble';
-import { useTheme } from '@emotion/react';
+
 
 const ChatContainer = styled.View(({ theme }) => ({
   flex: 1,

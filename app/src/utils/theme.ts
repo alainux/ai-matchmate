@@ -44,8 +44,10 @@ const colors = {
 const themeTokens = {
   text: colors.greyDark,
   textPrimary: colors.red,
+  textInverted: colors.dark,
 
   border: colord(colors.dark).lighten(0.1).toHex(),
+  borderLight: colors.greyLight,
 
   buttonPrimary: colors.red,
   buttonPrimaryText: colors.greyLight,

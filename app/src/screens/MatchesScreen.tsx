@@ -26,13 +26,13 @@ const MatchImage = styled.Image(({ theme }) => ({
 
 const MatchName = styled.Text(({ theme }) => ({
   flex: 1,
-  color: theme.tokens.buttonSecondaryText,
+  color: theme.tokens.textInverted,
   ...theme.text.variations.strongLarge,
   marginBottom: theme.tokens.spacer,
 }));
 
 const MatchBio = styled.Text(({ theme }) => ({
-  color: theme.tokens.buttonSecondaryText,
+  color: theme.tokens.textInverted,
   flex: 1,
   ...theme.text.variations.base,
 }));
@@ -53,6 +53,7 @@ export const MatchesScreen: React.FC = () => {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
           <MatchCard
+            activeOpacity={0.9}
             onPress={() => {
               navigation.navigate('MatchDetails', { match: item });
             }}>

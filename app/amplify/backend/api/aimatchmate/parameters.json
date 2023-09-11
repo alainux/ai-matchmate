@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "aimatchmate",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authaimatchmate57a5e807",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

@@ -1,19 +1,29 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-aimatchmate-dev-212515-authRole",
-      "UnauthRoleArn": "arn:aws:iam::924718294120:role/amplify-aimatchmate-dev-212515-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::924718294120:role/amplify-aimatchmate-dev-212515-authRole",
+      "AuthRoleName": "amplify-aimatchmate-dev-141347-authRole",
+      "UnauthRoleArn": "arn:aws:iam::924718294120:role/amplify-aimatchmate-dev-141347-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::924718294120:role/amplify-aimatchmate-dev-141347-authRole",
       "Region": "eu-north-1",
-      "DeploymentBucketName": "amplify-aimatchmate-dev-212515-deployment",
-      "UnauthRoleName": "amplify-aimatchmate-dev-212515-unauthRole",
-      "StackName": "amplify-aimatchmate-dev-212515",
-      "StackId": "arn:aws:cloudformation:eu-north-1:924718294120:stack/amplify-aimatchmate-dev-212515/c6148870-500f-11ee-b2fd-0a40b8bbe2ba",
-      "AmplifyAppId": "d2h0s6zumgmuz1"
+      "DeploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
+      "UnauthRoleName": "amplify-aimatchmate-dev-141347-unauthRole",
+      "StackName": "amplify-aimatchmate-dev-141347",
+      "StackId": "arn:aws:cloudformation:eu-north-1:924718294120:stack/amplify-aimatchmate-dev-141347/a9bf4970-509c-11ee-bc78-0e4e0a9dc5b4",
+      "AmplifyAppId": "d1t0fgb897wtil",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-aimatchmate-dev-141347-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
-        "aimatchmatea44634ee": {}
+        "aimatchmate57a5e807": {}
+      },
+      "function": {
+        "aimatchmate57a5e807PreSignup": {
+          "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
+          "s3Key": "amplify-builds/aimatchmate57a5e807PreSignup-34572b474a47506f6c2f-build.zip"
+        }
+      },
+      "api": {
+        "aimatchmate": {}
       }
     }
   }

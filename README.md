@@ -469,9 +469,25 @@ https://github.com/alainux/ai-matchmate/blob/2b0ca490d8c005ecd213bc76c585a56e05b
 
 <img width="1315" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/3ee459c6-b736-4aab-9636-5f8076001217">
 
+#### 3. Add the api
 
+The power of AWS Amplify lies in its ability to auto-generate much of the necessary backend resources and code based on a GraphQL schema. Here's how you can set it up:
 
+```sh
+% amplify add api        
+? Select from one of the below mentioned services: GraphQL
+? Here is the GraphQL API that we will create. Select a setting to edit or continue Authorization modes: API key (default, expiration time: 7 days from now)
+? Choose the default authorization type for the API Amazon Cognito User Pool
+Use a Cognito user pool configured as a part of this project.
+? Configure additional auth types? No
+? Here is the GraphQL API that we will create. Select a setting to edit or continue Continue
+? Choose a schema template: Objects with fine-grained access control (e.g., a project management app with owner-based authorization)
+⚠️ WARNING: owners may reassign ownership for the following model(s) and role(s): PrivateNote: [owner]. If this is not intentional, you may want to apply field-level authorization rules to these fields. To read more: https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access.
+✅ GraphQL schema compiled successfully.
+```
 
+##### Defining the schema
 
+Amplify will create a schema.graphql file within the `amplify/backend/api/{yourApiName}/` directory. This is where you'll define your data types and relationships.
 
 

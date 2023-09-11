@@ -1,0 +1,37 @@
+type Profile
+  @model
+  @auth(
+    rules: [
+      { allow: private, operations: [read, update] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  email: String! @index
+  bio: String
+  contactInfo: String
+  profileImage: String
+  matches: [ChatMessage] @hasMany(indexName: "byProfile", fields: ["id"])
+  chatMessages: [ChatMessage] @hasMany(indexName: "byProfile", fields: ["id"])
+}
+
+type Match @model @auth(rules: [{ allow: owner, operations: [read] }]) {
+  id: ID!
+  compatibilityScore: Float!
+  matchTimestamp: String!
+  profileID: ID! @index(name: "byProfile")
+}
+
+type ChatMessage
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, read] }]) {
+  id: ID!
+  content: String!
+  sender: SenderType!
+  profileID: ID! @index(name: "byProfile")
+}
+
+enum SenderType {
+  USER
+  MATCHMATE_AI
+}

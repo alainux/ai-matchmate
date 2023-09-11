@@ -1,11 +1,24 @@
 // app/src/screens/ProfileScreen.tsx
 import styled from '@emotion/native';
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faImage, faSave } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '../components/Button';
 import { useTheme } from '@emotion/react';
+import { faImage, faSave } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import React, { useEffect } from 'react';
+import { Button } from '../components/Button';
 import { SignOutButton } from '../components/SignOutButton';
+
+import { GraphQLQuery } from '@aws-amplify/api';
+import { API } from 'aws-amplify';
+import { updateProfile } from '../graphql/mutations';
+import {
+    Profile,
+    ProfilesByEmailQuery,
+    UpdateProfileMutation,
+} from '../types/graphql';
+
+import { useAuthenticator } from '@aws-amplify/ui-react-native';
+import { profilesByEmail } from '../graphql/queries';
+import { userSelector } from '../utils/aws';
 
 const ProfileContainer = styled.ScrollView(({ theme }) => ({
   flex: 1,
@@ -18,13 +31,15 @@ const Label = styled.Text(({ theme }) => ({
   ...theme.text.variations.base,
 }));
 
-const Input = styled.TextInput(({ theme }) => ({
+const Input = styled.TextInput(({ theme, editable }) => ({
   ...theme.common.input,
 
   marginBottom: theme.tokens.spacer,
 
   ...theme.common.surfaceDimensions,
   ...theme.text.variations.base,
+  color:
+    editable === false ? theme.tokens.text : theme.tokens.buttonPrimaryText,
 }));
 
 const ProfileImage = styled.Image(({ theme }) => ({
@@ -63,20 +78,71 @@ const PhotoContainer = styled.View(({ theme }) => ({
 
 const PLACEHOLDER_IMAGE = 'https://picsum.photos/id/203/800/500.jpg';
 
+type ProfileInfo = Pick<
+  Profile,
+  'id' | 'name' | 'contactInfo' | 'bio' | 'email' | 'profileImage'
+>;
+
 export const ProfileScreen: React.FC = () => {
+  const { user } = useAuthenticator(userSelector);
   const theme = useTheme();
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [contactInfo, setContactInfo] = useState('Telegram: @john_doe');
-  const [profileImage] = useState(PLACEHOLDER_IMAGE);
-  const [bio, setBio] = useState(
-    'Tech enthusiast, avid traveler, and AI aficionado. Love hiking and always up for a good chat about the latest in tech.',
-  );
+
+  const [profile, setProfile] = React.useState<ProfileInfo>();
+
+  const fetchProfile = async (email: string) => {
+    try {
+      const result = await API.graphql<GraphQLQuery<ProfilesByEmailQuery>>({
+        query: profilesByEmail,
+        variables: {
+          email: email,
+        },
+      });
+
+      const profile =
+        (result?.data?.profilesByEmail?.items?.[0] as Profile) ?? null;
+
+      setProfile({
+        id: profile.id,
+        name: profile.name,
+        contactInfo: profile.contactInfo,
+        bio: profile.bio,
+        email: profile.email,
+        profileImage: profile.profileImage,
+      });
+    } catch (e) {
+      console.log('error fetching user profile', e);
+    }
+  };
+
+  const onUpdateProfile = async () => {
+    try {
+      const result = await API.graphql<GraphQLQuery<UpdateProfileMutation>>({
+        query: updateProfile,
+        variables: {
+          input: profile,
+        },
+      });
+    } catch (e) {
+      console.log('error updating user profile', e);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.attributes?.email) {
+      fetchProfile(user.attributes.email);
+    }
+  }, [user]);
+
+  if (!profile) {
+    return <ProfileContainer>{/* Loading */}</ProfileContainer>;
+  }
 
   return (
     <ProfileContainer>
       <PhotoContainer>
-        <ProfileImage source={{ uri: profileImage }} />
+        <ProfileImage
+          source={{ uri: profile?.profileImage ?? PLACEHOLDER_IMAGE }}
+        />
 
         <Button
           icon={
@@ -96,22 +162,33 @@ export const ProfileScreen: React.FC = () => {
 
       <Label>Name</Label>
       <Input
-        value={name}
-        onChangeText={setName}
+        value={profile.name}
+        onChangeText={value =>
+          setProfile({
+            ...profile,
+            name: value,
+          })
+        }
         placeholder="Enter your name"
       />
 
       <Label>Email</Label>
       <Input
-        value={email}
-        onChangeText={setEmail}
+        value={profile.email}
+        editable={false}
+        // onChangeText={setEmail}
         placeholder="Enter your email"
       />
 
       <Label>Bio</Label>
       <BioInput
-        value={bio}
-        onChangeText={setBio}
+        value={profile.bio ?? ''}
+        onChangeText={value =>
+          setProfile({
+            ...profile,
+            bio: value,
+          })
+        }
         placeholder="Tell us a bit about yourself"
         multiline
         numberOfLines={4}
@@ -119,16 +196,19 @@ export const ProfileScreen: React.FC = () => {
 
       <Label>Contact Info</Label>
       <Input
-        value={contactInfo}
-        onChangeText={setContactInfo}
+        value={profile.contactInfo ?? ''}
+        onChangeText={value =>
+          setProfile({
+            ...profile,
+            contactInfo: value,
+          })
+        }
         placeholder="Enter your preferred contact method"
       />
 
       <Row>
         <Button
-          onPress={() => {
-            // TODO: Handle save profile logic here
-          }}
+          onPress={onUpdateProfile}
           icon={<FontAwesomeIcon icon={faSave} size={20} color="white" />}
           style={{ marginRight: theme.tokens.spacer }}>
           Save Profile

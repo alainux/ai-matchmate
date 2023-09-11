@@ -2,13 +2,10 @@ import React from 'react';
 
 import { Button } from './Button';
 import { useAuthenticator } from '@aws-amplify/ui-react-native';
-import { UseAuthenticatorSelector } from '@aws-amplify/ui-react-core/dist/types/Authenticator/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from '@emotion/react';
-
-// retrieves only the current value of 'user' from 'useAuthenticator'
-const userSelector: UseAuthenticatorSelector = context => [context.user];
+import { userSelector } from '../utils/aws';
 
 export const SignOutButton: React.FC = () => {
   const { signOut } = useAuthenticator(userSelector);

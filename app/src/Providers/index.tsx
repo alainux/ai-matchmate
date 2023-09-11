@@ -1,7 +1,7 @@
 import React from 'react';
+import { AuthenticatorProvider } from './AuthenticatorProvider';
 import { NavigationProvider } from './NavigationProvider';
 import { ThemeProvider } from './ThemeProvider';
-import { AuthenticatorProvider } from './AuthenticatorProvider';
 
 export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
