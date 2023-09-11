@@ -2,6 +2,8 @@
 
 ### AI MatchMate: Blending Conversations and Visuals for the Perfect Match
 
+**IMPORTANT** This is a work in progress and as the project progresses, some information can become outdated.
+
 <img width="1328" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/ffb75e9b-9f72-4ff9-b4d8-dcf8cdc42ef7">
 
 Navigating the world of modern dating can often feel like a maze. Traditional dating apps prioritize swiping left or right based on visuals, sometimes leading to choices that are influenced by inherent biases or fleeting emotions. On the flip side, basing matches purely on textual profiles can miss out on the undeniable human element of physical attraction.
