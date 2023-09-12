@@ -11,9 +11,9 @@ import { GraphQLQuery } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 import { updateProfile } from '../graphql/mutations';
 import {
-    Profile,
-    ProfilesByEmailQuery,
-    UpdateProfileMutation,
+  Profile,
+  ProfilesByEmailQuery,
+  UpdateProfileMutation,
 } from '../types/graphql';
 
 import { useAuthenticator } from '@aws-amplify/ui-react-native';
@@ -89,6 +89,18 @@ export const ProfileScreen: React.FC = () => {
 
   const [profile, setProfile] = React.useState<ProfileInfo>();
 
+  const [touched, setTouched] = React.useState(false);
+  const modifyProfileField = (
+    values: Pick<ProfileInfo, 'bio' | 'name' | 'contactInfo'>,
+  ) => {
+    setTouched(true);
+
+    setProfile({
+      ...((profile as ProfileInfo) ?? {}),
+      ...values,
+    });
+  };
+
   const fetchProfile = async (email: string) => {
     try {
       const result = await API.graphql<GraphQLQuery<ProfilesByEmailQuery>>({
@@ -101,14 +113,17 @@ export const ProfileScreen: React.FC = () => {
       const profile =
         (result?.data?.profilesByEmail?.items?.[0] as Profile) ?? null;
 
-      setProfile({
+      const profileData = {
         id: profile.id,
         name: profile.name,
         contactInfo: profile.contactInfo,
         bio: profile.bio,
         email: profile.email,
         profileImage: profile.profileImage,
-      });
+      };
+
+      setProfile(profileData);
+      setTouched(false);
     } catch (e) {
       console.log('error fetching user profile', e);
     }
@@ -116,12 +131,13 @@ export const ProfileScreen: React.FC = () => {
 
   const onUpdateProfile = async () => {
     try {
-      const result = await API.graphql<GraphQLQuery<UpdateProfileMutation>>({
+      await API.graphql<GraphQLQuery<UpdateProfileMutation>>({
         query: updateProfile,
         variables: {
           input: profile,
         },
       });
+      setTouched(false);
     } catch (e) {
       console.log('error updating user profile', e);
     }
@@ -164,7 +180,7 @@ export const ProfileScreen: React.FC = () => {
       <Input
         value={profile.name}
         onChangeText={value =>
-          setProfile({
+          modifyProfileField({
             ...profile,
             name: value,
           })
@@ -184,7 +200,7 @@ export const ProfileScreen: React.FC = () => {
       <BioInput
         value={profile.bio ?? ''}
         onChangeText={value =>
-          setProfile({
+          modifyProfileField({
             ...profile,
             bio: value,
           })
@@ -198,7 +214,7 @@ export const ProfileScreen: React.FC = () => {
       <Input
         value={profile.contactInfo ?? ''}
         onChangeText={value =>
-          setProfile({
+          modifyProfileField({
             ...profile,
             contactInfo: value,
           })
@@ -210,6 +226,7 @@ export const ProfileScreen: React.FC = () => {
         <Button
           onPress={onUpdateProfile}
           icon={<FontAwesomeIcon icon={faSave} size={20} color="white" />}
+          disabled={!touched}
           style={{ marginRight: theme.tokens.spacer }}>
           Save Profile
         </Button>

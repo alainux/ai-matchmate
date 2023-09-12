@@ -8,8 +8,6 @@ exports.handler = async (event, context) => {
   const GRAPHQL_ENDPOINT = process.env.API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT;
   const GRAPHQL_API_KEY = process.env.API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT;
 
-  console.log('GOT PRE-SIGNUP EVENT', JSON.stringify(event, null, 4));
-
   const query = /* GraphQL */ `
     mutation CreateProfile($input: CreateProfileInput!) {
       createProfile(input: $input) {
@@ -40,11 +38,6 @@ exports.handler = async (event, context) => {
 
   const response = {};
 
-  console.log('ABOUT TO DO FETCH', JSON.stringify({
-    GRAPHQL_ENDPOINT, 
-    options
-  }, null, 4))
-
   try {
     const res = await fetch(GRAPHQL_ENDPOINT, options);
     response.data = await res.json();
@@ -63,7 +56,6 @@ exports.handler = async (event, context) => {
     };
   }
 
-  console.log('RESPONSE', JSON.stringify(response, null, 4));
   return {
     ...response,
     body: JSON.stringify(response.body),

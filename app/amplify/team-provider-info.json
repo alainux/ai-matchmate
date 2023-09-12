@@ -19,7 +19,7 @@
       "function": {
         "aimatchmate57a5e807PreSignup": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
-          "s3Key": "amplify-builds/aimatchmate57a5e807PreSignup-34572b474a47506f6c2f-build.zip"
+          "s3Key": "amplify-builds/aimatchmate57a5e807PreSignup-6e735739612b4852616f-build.zip"
         }
       },
       "api": {

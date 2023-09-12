@@ -41,12 +41,15 @@ const colors = {
   red: '#d5394e',
 };
 
+export const lighter = (hex: string) => colord(hex).lighten(0.1).toHex();
+export const disable = (hex: string) => colord(hex).desaturate(0.5).toHex();
+
 const themeTokens = {
   text: colors.greyDark,
   textPrimary: colors.red,
   textInverted: colors.dark,
 
-  border: colord(colors.dark).lighten(0.1).toHex(),
+  border: lighter(colors.dark),
   borderLight: colors.greyLight,
 
   buttonPrimary: colors.red,
@@ -56,7 +59,7 @@ const themeTokens = {
   buttonSecondaryText: colors.greyDark,
 
   background: colors.dark,
-  backgroundLighter: colord(colors.dark).lighten(0.1).toHex(),
+  backgroundLighter: lighter(colors.dark),
 
   surfacePaddingHorizontal: BASE_UNIT * 4,
   surfacePaddingVertical: BASE_UNIT * 4,
