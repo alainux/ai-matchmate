@@ -17,9 +17,13 @@
         "aimatchmate57a5e807": {}
       },
       "function": {
-        "aimatchmate57a5e807PreSignup": {
+        "createMatch": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
-          "s3Key": "amplify-builds/aimatchmate57a5e807PreSignup-6e735739612b4852616f-build.zip"
+          "s3Key": "amplify-builds/createMatch-524b44493762566b4438-build.zip"
+        },
+        "aimatchmate57a5e807PostConfirmation": {
+          "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
+          "s3Key": "amplify-builds/aimatchmate57a5e807PostConfirmation-36756f3367365178344b-build.zip"
         }
       },
       "api": {

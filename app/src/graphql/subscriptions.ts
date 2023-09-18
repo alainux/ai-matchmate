@@ -3,8 +3,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateProfile = /* GraphQL */ `
-  subscription OnCreateProfile($filter: ModelSubscriptionProfileFilterInput) {
-    onCreateProfile(filter: $filter) {
+  subscription OnCreateProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $id: String
+  ) {
+    onCreateProfile(filter: $filter, id: $id) {
       id
       name
       email
@@ -14,26 +17,51 @@ export const onCreateProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -46,8 +74,11 @@ export const onCreateProfile = /* GraphQL */ `
   }
 `;
 export const onUpdateProfile = /* GraphQL */ `
-  subscription OnUpdateProfile($filter: ModelSubscriptionProfileFilterInput) {
-    onUpdateProfile(filter: $filter) {
+  subscription OnUpdateProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $id: String
+  ) {
+    onUpdateProfile(filter: $filter, id: $id) {
       id
       name
       email
@@ -57,26 +88,51 @@ export const onUpdateProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -89,8 +145,11 @@ export const onUpdateProfile = /* GraphQL */ `
   }
 `;
 export const onDeleteProfile = /* GraphQL */ `
-  subscription OnDeleteProfile($filter: ModelSubscriptionProfileFilterInput) {
-    onDeleteProfile(filter: $filter) {
+  subscription OnDeleteProfile(
+    $filter: ModelSubscriptionProfileFilterInput
+    $id: String
+  ) {
+    onDeleteProfile(filter: $filter, id: $id) {
       id
       name
       email
@@ -100,26 +159,51 @@ export const onDeleteProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -132,103 +216,508 @@ export const onDeleteProfile = /* GraphQL */ `
   }
 `;
 export const onCreateMatch = /* GraphQL */ `
-  subscription OnCreateMatch(
-    $filter: ModelSubscriptionMatchFilterInput
-    $owner: String
-  ) {
-    onCreateMatch(filter: $filter, owner: $owner) {
+  subscription OnCreateMatch($filter: ModelSubscriptionMatchFilterInput) {
+    onCreateMatch(filter: $filter) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onUpdateMatch = /* GraphQL */ `
-  subscription OnUpdateMatch(
-    $filter: ModelSubscriptionMatchFilterInput
-    $owner: String
-  ) {
-    onUpdateMatch(filter: $filter, owner: $owner) {
+  subscription OnUpdateMatch($filter: ModelSubscriptionMatchFilterInput) {
+    onUpdateMatch(filter: $filter) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
 export const onDeleteMatch = /* GraphQL */ `
-  subscription OnDeleteMatch(
-    $filter: ModelSubscriptionMatchFilterInput
-    $owner: String
-  ) {
-    onDeleteMatch(filter: $filter, owner: $owner) {
+  subscription OnDeleteMatch($filter: ModelSubscriptionMatchFilterInput) {
+    onDeleteMatch(filter: $filter) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const onCreateChatMessage = /* GraphQL */ `
-  subscription OnCreateChatMessage(
-    $filter: ModelSubscriptionChatMessageFilterInput
-    $owner: String
+export const onCreateProfilesToMatches = /* GraphQL */ `
+  subscription OnCreateProfilesToMatches(
+    $filter: ModelSubscriptionProfilesToMatchesFilterInput
+    $id: String
   ) {
-    onCreateChatMessage(filter: $filter, owner: $owner) {
+    onCreateProfilesToMatches(filter: $filter, id: $id) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const onUpdateChatMessage = /* GraphQL */ `
-  subscription OnUpdateChatMessage(
-    $filter: ModelSubscriptionChatMessageFilterInput
-    $owner: String
+export const onUpdateProfilesToMatches = /* GraphQL */ `
+  subscription OnUpdateProfilesToMatches(
+    $filter: ModelSubscriptionProfilesToMatchesFilterInput
+    $id: String
   ) {
-    onUpdateChatMessage(filter: $filter, owner: $owner) {
+    onUpdateProfilesToMatches(filter: $filter, id: $id) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const onDeleteChatMessage = /* GraphQL */ `
-  subscription OnDeleteChatMessage(
-    $filter: ModelSubscriptionChatMessageFilterInput
-    $owner: String
+export const onDeleteProfilesToMatches = /* GraphQL */ `
+  subscription OnDeleteProfilesToMatches(
+    $filter: ModelSubscriptionProfilesToMatchesFilterInput
+    $id: String
   ) {
-    onDeleteChatMessage(filter: $filter, owner: $owner) {
+    onDeleteProfilesToMatches(filter: $filter, id: $id) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }

@@ -2,11 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.4.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
-    "DOMAINBLACKLIST": {
-      "Type": "String",
-      "Default": ""
-    },
-    "DOMAINWHITELIST": {
+    "GROUP": {
       "Type": "String",
       "Default": ""
     },
@@ -42,12 +38,6 @@
     "env": {
       "Type": "String"
     },
-    "deploymentBucketName": {
-      "Type": "String"
-    },
-    "s3Key": {
-      "Type": "String"
-    },
     "apiaimatchmateGraphQLAPIIdOutput": {
       "Type": "String",
       "Default": "apiaimatchmateGraphQLAPIIdOutput"
@@ -59,6 +49,12 @@
     "apiaimatchmateGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apiaimatchmateGraphQLAPIKeyOutput"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -83,12 +79,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "aimatchmate57a5e807PreSignup",
+            "aimatchmate57a5e807PostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "aimatchmate57a5e807PreSignup",
+                  "aimatchmate57a5e807PostConfirmation",
                   "-",
                   {
                     "Ref": "env"
@@ -109,11 +105,8 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "DOMAINWHITELIST": {
-              "Ref": "DOMAINWHITELIST"
-            },
-            "DOMAINBLACKLIST": {
-              "Ref": "DOMAINBLACKLIST"
+            "GROUP": {
+              "Ref": "GROUP"
             },
             "API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT": {
               "Ref": "apiaimatchmateGraphQLAPIIdOutput"
@@ -150,12 +143,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "aimatchmate57a5e807PreSignup",
+            "aimatchmate57a5e807PostConfirmation",
             {
               "Fn::Join": [
                 "",
                 [
-                  "aimatchmate57a5e807PreSignup",
+                  "aimatchmate57a5e807PostConfirmation",
                   "-",
                   {
                     "Ref": "env"

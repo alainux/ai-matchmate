@@ -1,37 +1,32 @@
+input AMPLIFY {
+  globalAuthRule: AuthRule = { allow: public }
+}
+
 type Profile
   @model
   @auth(
     rules: [
-      { allow: private, operations: [read, update] }
+      { allow: public, provider: apiKey }
+      { allow: owner, ownerField: "id", provider: userPools }
     ]
   ) {
   id: ID!
   name: String!
-  email: String! @index
+  email: String!
   bio: String
   contactInfo: String
   profileImage: String
-  matches: [ChatMessage] @hasMany(indexName: "byProfile", fields: ["id"])
-  chatMessages: [ChatMessage] @hasMany(indexName: "byProfile", fields: ["id"])
+  matches: [Match!]! @manyToMany(relationName: "ProfilesToMatches")
 }
 
-type Match @model @auth(rules: [{ allow: owner, operations: [read] }]) {
-  id: ID!
-  compatibilityScore: Float!
-  matchTimestamp: String!
-  profileID: ID! @index(name: "byProfile")
-}
-
-type ChatMessage
+type Match
   @model
-  @auth(rules: [{ allow: owner, operations: [create, read] }]) {
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: private, operations: [read], provider: userPools }
+    ]
+  ) {
   id: ID!
-  content: String!
-  sender: SenderType!
-  profileID: ID! @index(name: "byProfile")
-}
-
-enum SenderType {
-  USER
-  MATCHMATE_AI
+  profiles: [Profile!]! @manyToMany(relationName: "ProfilesToMatches")
 }

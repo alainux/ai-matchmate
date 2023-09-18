@@ -10,6 +10,7 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/types/graphql.ts
         docsFilePath: src/graphql
+        maxDepth: 6
 extensions:
   amplify:
     version: 3

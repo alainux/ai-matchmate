@@ -18,7 +18,14 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "aimatchmate57a5e807PreSignup": {
+    "aimatchmate57a5e807PostConfirmation": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "createMatch": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

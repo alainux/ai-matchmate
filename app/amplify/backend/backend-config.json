@@ -44,7 +44,7 @@
             "Name"
           ],
           "category": "function",
-          "resourceName": "aimatchmate57a5e807PreSignup",
+          "resourceName": "aimatchmate57a5e807PostConfirmation",
           "triggerProvider": "Cognito"
         }
       ],
@@ -73,7 +73,23 @@
     }
   },
   "function": {
-    "aimatchmate57a5e807PreSignup": {
+    "aimatchmate57a5e807PostConfirmation": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "aimatchmate"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createMatch": {
       "build": true,
       "dependsOn": [
         {
@@ -91,19 +107,35 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_aimatchmate57a5e807PreSignup_deploymentBucketName": {
+    "AMPLIFY_function_aimatchmate57a5e807PostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "aimatchmate57a5e807PreSignup"
+          "resourceName": "aimatchmate57a5e807PostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_aimatchmate57a5e807PreSignup_s3Key": {
+    "AMPLIFY_function_aimatchmate57a5e807PostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "aimatchmate57a5e807PreSignup"
+          "resourceName": "aimatchmate57a5e807PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_createMatch_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createMatch"
+        }
+      ]
+    },
+    "AMPLIFY_function_createMatch_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createMatch"
         }
       ]
     }

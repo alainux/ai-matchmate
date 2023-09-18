@@ -284,18 +284,8 @@ npm install aws-amplify amazon-cognito-identity-js @react-native-community/netin
 % amplify init        
 Note: It is recommended to run this command from the root of your app directory
 ? Enter a name for the project aimatchmate
-The following configuration will be applied:
 
-Project information
-| Name: aimatchmate
-| Environment: dev
-| Default editor: Visual Studio Code
-| App type: javascript
-| Javascript framework: react-native
-| Source Directory Path: src
-| Distribution Directory Path: /
-| Build Command: npm run-script build
-| Start Command: npm run-script start
+# Use default config
 
 ? Initialize the project with the above configuration? Yes
 Using default provider  awscloudformation
@@ -484,12 +474,9 @@ Use a Cognito user pool configured as a part of this project.
 ? Configure additional auth types? No
 ? Here is the GraphQL API that we will create. Select a setting to edit or continue Continue
 ? Choose a schema template: Objects with fine-grained access control (e.g., a project management app with owner-based authorization)
-⚠️ WARNING: owners may reassign ownership for the following model(s) and role(s): PrivateNote: [owner]. If this is not intentional, you may want to apply field-level authorization rules to these fields. To read more: https://docs.amplify.aws/cli/graphql/authorization-rules/#per-user--owner-based-data-access.
+...
 ✅ GraphQL schema compiled successfully.
 ```
-
-
-
 
 ##### Defining the schema
 
@@ -499,7 +486,19 @@ https://github.com/alainux/ai-matchmate/blob/807d37e4b6c04bcf4e1346c1985569a2150
 
 This schema will add the required models **Profile**, **Match**, and **ChatMessage** and their required authentication directives based on the AWS syntax, which can be referred to from the [official docs](https://docs.amplify.aws/cli/graphql/data-modeling/).
 
-##### Creating Profile items during Cognito signup 
+At this point you will push your changes to amplify, so **take a note of the graphql endpoint and API key**
+
+```sh
+% amplify push 
+...
+Deployment state saved successfully.
+
+GraphQL endpoint: https://xxx.amazonaws.com/graphql
+GraphQL API KEY: xxx
+
+```
+
+##### Creating Profile items during Cognito Signup 
 
 For this we are going to make use of Cognito hooks which are lambda functions invoked on particular steps. It is fairly easy to generate them utilizing the Amplify CLI.
 
@@ -570,7 +569,8 @@ https://github.com/alainux/ai-matchmate/blob/a1fdc76075fb56c8d54ff8cb55d53b9a8b3
 
 We can now register with the app and we will see a user being created in the AWS Cognito dashboard. We will also be able to get the corresponding user profile for that user.
 
-##### Updating ProfileScreen.tsx
+#### 4. Displaying Profile
+##### Updates to ProfileScreen.tsx
 
 Now that we are able to read and update our profiles, we will go ahead and edit ProfileScreen.tsx:
 
@@ -578,3 +578,70 @@ https://github.com/alainux/ai-matchmate/blob/a1fdc76075fb56c8d54ff8cb55d53b9a8b3
 
 <img width="1290" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/93697ff5-80cc-4ba4-b793-cc2412d7f2d9">
 
+#### 5. Creating and Showing Matches 
+
+##### Implementing the createMatch Function
+
+In the world of app development, especially when dealing with matchmaking logic, modularity is key. Given the complexities associated with determining matches and then storing or acting upon those matches, it's wise to break these steps down into manageable pieces. This not only makes the development process smoother but also eases future modifications and scaling.
+
+###### Why a Separate createMatch Function?
+
+- **Decoupling**: By separating the process of determining matches from the act of creating and storing them, we ensure that each function focuses on a singular task. This decoupling promotes easier troubleshooting, as issues can be isolated to a specific segment of the matchmaking process.
+
+- **Flexibility & Reusability**: The createMatch function can be invoked in different contexts. Whether matches are determined through our primary AI-driven logic, manually by users, or by administrators, the same function can be utilized to save these matches.
+
+- **Optimized Error Handling**: With a dedicated function, errors related to match creation, storage, or notification can be handled more effectively without getting tangled in the complexities of the matchmaking logic.
+
+Go ahead and create the lambda function:
+
+```sh
+% amplify add function
+? Select which capability you want to add: Lambda function (serverless function)
+? Provide an AWS Lambda function name: createMatch
+? Choose the runtime that you want to use: NodeJS
+? Choose the function template that you want to use: Hello World
+? Do you want to configure advanced settings? Yes
+? Do you want to access other resources in this project from your Lambda function? Yes
+? Select the categories you want this function to have access to. api
+? Select the operations you want to permit on aimatchmate Mutation
+? Do you want to invoke this function on a recurring schedule? No
+? Do you want to enable Lambda layers for this function? No
+? Do you want to configure environment variables for this function? No
+? Do you want to configure secret values this function can access? No
+✔ Choose the package manager that you want to use: · NPM
+? Do you want to edit the local lambda function now? No
+✅ Successfully added resource createMatch locally.
+```
+
+
+
+##### Invoking createMatch:
+Once potential matches have been determined (be it through AI logic, user input, or other methods), it's time to solidify these connections using our createMatch function.
+
+javascript
+Copy code
+const createMatch = async (profileID1, profileID2) => {
+  // Store the match in DynamoDB
+  const matchData = {
+    id: generateUniqueID(), // This function generates a unique ID for the match
+    profile1: profileID1,
+    profile2: profileID2,
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    await dynamoDB.put({
+      TableName: 'MatchesTable',
+      Item: matchData,
+    }).promise();
+
+    // If real-time notifications are being used
+    notifyUsersOfMatch(profileID1, profileID2); // This function handles notifying the respective users of their new match
+
+    return matchData;
+  } catch (error) {
+    console.error("Error creating match:", error);
+    throw new Error("Failed to create match");
+  }
+};
+By invoking createMatch, you're taking the potential matches determined by your matchmaking logic and giving them tangible form within the app's infrastructure. This ensures users can view, interact with, and benefit from the connections the app facilitates.

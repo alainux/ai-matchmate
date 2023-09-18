@@ -17,26 +17,51 @@ export const createProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -63,26 +88,51 @@ export const updateProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -109,26 +159,51 @@ export const deleteProfile = /* GraphQL */ `
       matches {
         items {
           id
-          content
-          sender
-          profileID
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
           createdAt
           updatedAt
-          owner
-          __typename
-        }
-        nextToken
-        __typename
-      }
-      chatMessages {
-        items {
-          id
-          content
-          sender
-          profileID
-          createdAt
-          updatedAt
-          owner
           __typename
         }
         nextToken
@@ -147,12 +222,61 @@ export const createMatch = /* GraphQL */ `
   ) {
     createMatch(input: $input, condition: $condition) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -164,12 +288,61 @@ export const updateMatch = /* GraphQL */ `
   ) {
     updateMatch(input: $input, condition: $condition) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
@@ -181,63 +354,379 @@ export const deleteMatch = /* GraphQL */ `
   ) {
     deleteMatch(input: $input, condition: $condition) {
       id
-      compatibilityScore
-      matchTimestamp
-      profileID
+      profiles {
+        items {
+          id
+          profileId
+          matchId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          match {
+            id
+            profiles {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const createChatMessage = /* GraphQL */ `
-  mutation CreateChatMessage(
-    $input: CreateChatMessageInput!
-    $condition: ModelChatMessageConditionInput
+export const createProfilesToMatches = /* GraphQL */ `
+  mutation CreateProfilesToMatches(
+    $input: CreateProfilesToMatchesInput!
+    $condition: ModelProfilesToMatchesConditionInput
   ) {
-    createChatMessage(input: $input, condition: $condition) {
+    createProfilesToMatches(input: $input, condition: $condition) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const updateChatMessage = /* GraphQL */ `
-  mutation UpdateChatMessage(
-    $input: UpdateChatMessageInput!
-    $condition: ModelChatMessageConditionInput
+export const updateProfilesToMatches = /* GraphQL */ `
+  mutation UpdateProfilesToMatches(
+    $input: UpdateProfilesToMatchesInput!
+    $condition: ModelProfilesToMatchesConditionInput
   ) {
-    updateChatMessage(input: $input, condition: $condition) {
+    updateProfilesToMatches(input: $input, condition: $condition) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }
 `;
-export const deleteChatMessage = /* GraphQL */ `
-  mutation DeleteChatMessage(
-    $input: DeleteChatMessageInput!
-    $condition: ModelChatMessageConditionInput
+export const deleteProfilesToMatches = /* GraphQL */ `
+  mutation DeleteProfilesToMatches(
+    $input: DeleteProfilesToMatchesInput!
+    $condition: ModelProfilesToMatchesConditionInput
   ) {
-    deleteChatMessage(input: $input, condition: $condition) {
+    deleteProfilesToMatches(input: $input, condition: $condition) {
       id
-      content
-      sender
-      profileID
+      profileId
+      matchId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      match {
+        id
+        profiles {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
-      owner
       __typename
     }
   }

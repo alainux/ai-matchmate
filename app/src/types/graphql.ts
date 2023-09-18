@@ -70,34 +70,35 @@ export type Profile = {
   bio?: string | null,
   contactInfo?: string | null,
   profileImage?: string | null,
-  matches?: ModelChatMessageConnection | null,
-  chatMessages?: ModelChatMessageConnection | null,
+  matches?: ModelProfilesToMatchesConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type ModelChatMessageConnection = {
-  __typename: "ModelChatMessageConnection",
-  items:  Array<ChatMessage | null >,
+export type ModelProfilesToMatchesConnection = {
+  __typename: "ModelProfilesToMatchesConnection",
+  items:  Array<ProfilesToMatches | null >,
   nextToken?: string | null,
 };
 
-export type ChatMessage = {
-  __typename: "ChatMessage",
+export type ProfilesToMatches = {
+  __typename: "ProfilesToMatches",
   id: string,
-  content: string,
-  sender: SenderType,
-  profileID: string,
+  profileId: string,
+  matchId: string,
+  profile: Profile,
+  match: Match,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
-export enum SenderType {
-  USER = "USER",
-  MATCHMATE_AI = "MATCHMATE_AI",
-}
-
+export type Match = {
+  __typename: "Match",
+  id: string,
+  profiles?: ModelProfilesToMatchesConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
 
 export type UpdateProfileInput = {
   id: string,
@@ -114,30 +115,34 @@ export type DeleteProfileInput = {
 
 export type CreateMatchInput = {
   id?: string | null,
-  compatibilityScore: number,
-  matchTimestamp: string,
-  profileID: string,
 };
 
 export type ModelMatchConditionInput = {
-  compatibilityScore?: ModelFloatInput | null,
-  matchTimestamp?: ModelStringInput | null,
-  profileID?: ModelIDInput | null,
   and?: Array< ModelMatchConditionInput | null > | null,
   or?: Array< ModelMatchConditionInput | null > | null,
   not?: ModelMatchConditionInput | null,
 };
 
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
+export type UpdateMatchInput = {
+  id: string,
+};
+
+export type DeleteMatchInput = {
+  id: string,
+};
+
+export type CreateProfilesToMatchesInput = {
+  id?: string | null,
+  profileId: string,
+  matchId: string,
+};
+
+export type ModelProfilesToMatchesConditionInput = {
+  profileId?: ModelIDInput | null,
+  matchId?: ModelIDInput | null,
+  and?: Array< ModelProfilesToMatchesConditionInput | null > | null,
+  or?: Array< ModelProfilesToMatchesConditionInput | null > | null,
+  not?: ModelProfilesToMatchesConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -156,57 +161,13 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type Match = {
-  __typename: "Match",
+export type UpdateProfilesToMatchesInput = {
   id: string,
-  compatibilityScore: number,
-  matchTimestamp: string,
-  profileID: string,
-  createdAt: string,
-  updatedAt: string,
-  owner?: string | null,
+  profileId?: string | null,
+  matchId?: string | null,
 };
 
-export type UpdateMatchInput = {
-  id: string,
-  compatibilityScore?: number | null,
-  matchTimestamp?: string | null,
-  profileID?: string | null,
-};
-
-export type DeleteMatchInput = {
-  id: string,
-};
-
-export type CreateChatMessageInput = {
-  id?: string | null,
-  content: string,
-  sender: SenderType,
-  profileID: string,
-};
-
-export type ModelChatMessageConditionInput = {
-  content?: ModelStringInput | null,
-  sender?: ModelSenderTypeInput | null,
-  profileID?: ModelIDInput | null,
-  and?: Array< ModelChatMessageConditionInput | null > | null,
-  or?: Array< ModelChatMessageConditionInput | null > | null,
-  not?: ModelChatMessageConditionInput | null,
-};
-
-export type ModelSenderTypeInput = {
-  eq?: SenderType | null,
-  ne?: SenderType | null,
-};
-
-export type UpdateChatMessageInput = {
-  id: string,
-  content?: string | null,
-  sender?: SenderType | null,
-  profileID?: string | null,
-};
-
-export type DeleteChatMessageInput = {
+export type DeleteProfilesToMatchesInput = {
   id: string,
 };
 
@@ -230,9 +191,6 @@ export type ModelProfileConnection = {
 
 export type ModelMatchFilterInput = {
   id?: ModelIDInput | null,
-  compatibilityScore?: ModelFloatInput | null,
-  matchTimestamp?: ModelStringInput | null,
-  profileID?: ModelIDInput | null,
   and?: Array< ModelMatchFilterInput | null > | null,
   or?: Array< ModelMatchFilterInput | null > | null,
   not?: ModelMatchFilterInput | null,
@@ -244,14 +202,13 @@ export type ModelMatchConnection = {
   nextToken?: string | null,
 };
 
-export type ModelChatMessageFilterInput = {
+export type ModelProfilesToMatchesFilterInput = {
   id?: ModelIDInput | null,
-  content?: ModelStringInput | null,
-  sender?: ModelSenderTypeInput | null,
-  profileID?: ModelIDInput | null,
-  and?: Array< ModelChatMessageFilterInput | null > | null,
-  or?: Array< ModelChatMessageFilterInput | null > | null,
-  not?: ModelChatMessageFilterInput | null,
+  profileId?: ModelIDInput | null,
+  matchId?: ModelIDInput | null,
+  and?: Array< ModelProfilesToMatchesFilterInput | null > | null,
+  or?: Array< ModelProfilesToMatchesFilterInput | null > | null,
+  not?: ModelProfilesToMatchesFilterInput | null,
 };
 
 export enum ModelSortDirection {
@@ -261,7 +218,6 @@ export enum ModelSortDirection {
 
 
 export type ModelSubscriptionProfileFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   email?: ModelSubscriptionStringInput | null,
   bio?: ModelSubscriptionStringInput | null,
@@ -269,21 +225,6 @@ export type ModelSubscriptionProfileFilterInput = {
   profileImage?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionProfileFilterInput | null > | null,
   or?: Array< ModelSubscriptionProfileFilterInput | null > | null,
-};
-
-export type ModelSubscriptionIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -303,32 +244,30 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionMatchFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  compatibilityScore?: ModelSubscriptionFloatInput | null,
-  matchTimestamp?: ModelSubscriptionStringInput | null,
-  profileID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionMatchFilterInput | null > | null,
   or?: Array< ModelSubscriptionMatchFilterInput | null > | null,
 };
 
-export type ModelSubscriptionFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
+export type ModelSubscriptionIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionChatMessageFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  content?: ModelSubscriptionStringInput | null,
-  sender?: ModelSubscriptionStringInput | null,
-  profileID?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionChatMessageFilterInput | null > | null,
-  or?: Array< ModelSubscriptionChatMessageFilterInput | null > | null,
+export type ModelSubscriptionProfilesToMatchesFilterInput = {
+  profileId?: ModelSubscriptionIDInput | null,
+  matchId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionProfilesToMatchesFilterInput | null > | null,
+  or?: Array< ModelSubscriptionProfilesToMatchesFilterInput | null > | null,
 };
 
 export type CreateProfileMutationVariables = {
@@ -346,30 +285,55 @@ export type CreateProfileMutation = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -393,30 +357,55 @@ export type UpdateProfileMutation = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -440,30 +429,55 @@ export type DeleteProfileMutation = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -481,12 +495,61 @@ export type CreateMatchMutation = {
   createMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -499,12 +562,61 @@ export type UpdateMatchMutation = {
   updateMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -517,66 +629,382 @@ export type DeleteMatchMutation = {
   deleteMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type CreateChatMessageMutationVariables = {
-  input: CreateChatMessageInput,
-  condition?: ModelChatMessageConditionInput | null,
+export type CreateProfilesToMatchesMutationVariables = {
+  input: CreateProfilesToMatchesInput,
+  condition?: ModelProfilesToMatchesConditionInput | null,
 };
 
-export type CreateChatMessageMutation = {
-  createChatMessage?:  {
-    __typename: "ChatMessage",
+export type CreateProfilesToMatchesMutation = {
+  createProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type UpdateChatMessageMutationVariables = {
-  input: UpdateChatMessageInput,
-  condition?: ModelChatMessageConditionInput | null,
+export type UpdateProfilesToMatchesMutationVariables = {
+  input: UpdateProfilesToMatchesInput,
+  condition?: ModelProfilesToMatchesConditionInput | null,
 };
 
-export type UpdateChatMessageMutation = {
-  updateChatMessage?:  {
-    __typename: "ChatMessage",
+export type UpdateProfilesToMatchesMutation = {
+  updateProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type DeleteChatMessageMutationVariables = {
-  input: DeleteChatMessageInput,
-  condition?: ModelChatMessageConditionInput | null,
+export type DeleteProfilesToMatchesMutationVariables = {
+  input: DeleteProfilesToMatchesInput,
+  condition?: ModelProfilesToMatchesConditionInput | null,
 };
 
-export type DeleteChatMessageMutation = {
-  deleteChatMessage?:  {
-    __typename: "ChatMessage",
+export type DeleteProfilesToMatchesMutation = {
+  deleteProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -594,30 +1022,55 @@ export type GetProfileQuery = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -644,11 +1097,40 @@ export type ListProfilesQuery = {
       contactInfo?: string | null,
       profileImage?: string | null,
       matches?:  {
-        __typename: "ModelChatMessageConnection",
-        nextToken?: string | null,
-      } | null,
-      chatMessages?:  {
-        __typename: "ModelChatMessageConnection",
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -666,12 +1148,61 @@ export type GetMatchQuery = {
   getMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -687,69 +1218,61 @@ export type ListMatchesQuery = {
     items:  Array< {
       __typename: "Match",
       id: string,
-      compatibilityScore: number,
-      matchTimestamp: string,
-      profileID: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type GetChatMessageQueryVariables = {
+export type GetProfilesToMatchesQueryVariables = {
   id: string,
 };
 
-export type GetChatMessageQuery = {
-  getChatMessage?:  {
-    __typename: "ChatMessage",
+export type GetProfilesToMatchesQuery = {
+  getProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListChatMessagesQueryVariables = {
-  filter?: ModelChatMessageFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListChatMessagesQuery = {
-  listChatMessages?:  {
-    __typename: "ModelChatMessageConnection",
-    items:  Array< {
-      __typename: "ChatMessage",
-      id: string,
-      content: string,
-      sender: SenderType,
-      profileID: string,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ProfilesByEmailQueryVariables = {
-  email: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelProfileFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ProfilesByEmailQuery = {
-  profilesByEmail?:  {
-    __typename: "ModelProfileConnection",
-    items:  Array< {
+    profileId: string,
+    matchId: string,
+    profile:  {
       __typename: "Profile",
       id: string,
       name: string,
@@ -758,65 +1281,380 @@ export type ProfilesByEmailQuery = {
       contactInfo?: string | null,
       profileImage?: string | null,
       matches?:  {
-        __typename: "ModelChatMessageConnection",
-        nextToken?: string | null,
-      } | null,
-      chatMessages?:  {
-        __typename: "ModelChatMessageConnection",
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
         nextToken?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type MatchesByProfileIDQueryVariables = {
-  profileID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelMatchFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type MatchesByProfileIDQuery = {
-  matchesByProfileID?:  {
-    __typename: "ModelMatchConnection",
-    items:  Array< {
+    },
+    match:  {
       __typename: "Match",
       id: string,
-      compatibilityScore: number,
-      matchTimestamp: string,
-      profileID: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListProfilesToMatchesQueryVariables = {
+  filter?: ModelProfilesToMatchesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProfilesToMatchesQuery = {
+  listProfilesToMatches?:  {
+    __typename: "ModelProfilesToMatchesConnection",
+    items:  Array< {
+      __typename: "ProfilesToMatches",
+      id: string,
+      profileId: string,
+      matchId: string,
+      profile:  {
+        __typename: "Profile",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        contactInfo?: string | null,
+        profileImage?: string | null,
+        matches?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      match:  {
+        __typename: "Match",
+        id: string,
+        profiles?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
-export type ChatMessagesByProfileIDQueryVariables = {
-  profileID: string,
+export type ProfilesToMatchesByProfileIdQueryVariables = {
+  profileId: string,
   sortDirection?: ModelSortDirection | null,
-  filter?: ModelChatMessageFilterInput | null,
+  filter?: ModelProfilesToMatchesFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ChatMessagesByProfileIDQuery = {
-  chatMessagesByProfileID?:  {
-    __typename: "ModelChatMessageConnection",
+export type ProfilesToMatchesByProfileIdQuery = {
+  profilesToMatchesByProfileId?:  {
+    __typename: "ModelProfilesToMatchesConnection",
     items:  Array< {
-      __typename: "ChatMessage",
+      __typename: "ProfilesToMatches",
       id: string,
-      content: string,
-      sender: SenderType,
-      profileID: string,
+      profileId: string,
+      matchId: string,
+      profile:  {
+        __typename: "Profile",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        contactInfo?: string | null,
+        profileImage?: string | null,
+        matches?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      match:  {
+        __typename: "Match",
+        id: string,
+        profiles?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProfilesToMatchesByMatchIdQueryVariables = {
+  matchId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProfilesToMatchesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProfilesToMatchesByMatchIdQuery = {
+  profilesToMatchesByMatchId?:  {
+    __typename: "ModelProfilesToMatchesConnection",
+    items:  Array< {
+      __typename: "ProfilesToMatches",
+      id: string,
+      profileId: string,
+      matchId: string,
+      profile:  {
+        __typename: "Profile",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        contactInfo?: string | null,
+        profileImage?: string | null,
+        matches?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      match:  {
+        __typename: "Match",
+        id: string,
+        profiles?:  {
+          __typename: "ModelProfilesToMatchesConnection",
+          items:  Array< {
+            __typename: "ProfilesToMatches",
+            id: string,
+            profileId: string,
+            matchId: string,
+            profile:  {
+              __typename: "Profile",
+              id: string,
+              name: string,
+              email: string,
+              bio?: string | null,
+              contactInfo?: string | null,
+              profileImage?: string | null,
+              createdAt: string,
+              updatedAt: string,
+            },
+            match:  {
+              __typename: "Match",
+              id: string,
+              createdAt: string,
+              updatedAt: string,
+            },
+            createdAt: string,
+            updatedAt: string,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+      },
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -824,6 +1662,7 @@ export type ChatMessagesByProfileIDQuery = {
 
 export type OnCreateProfileSubscriptionVariables = {
   filter?: ModelSubscriptionProfileFilterInput | null,
+  id?: string | null,
 };
 
 export type OnCreateProfileSubscription = {
@@ -836,30 +1675,55 @@ export type OnCreateProfileSubscription = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -870,6 +1734,7 @@ export type OnCreateProfileSubscription = {
 
 export type OnUpdateProfileSubscriptionVariables = {
   filter?: ModelSubscriptionProfileFilterInput | null,
+  id?: string | null,
 };
 
 export type OnUpdateProfileSubscription = {
@@ -882,30 +1747,55 @@ export type OnUpdateProfileSubscription = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -916,6 +1806,7 @@ export type OnUpdateProfileSubscription = {
 
 export type OnDeleteProfileSubscriptionVariables = {
   filter?: ModelSubscriptionProfileFilterInput | null,
+  id?: string | null,
 };
 
 export type OnDeleteProfileSubscription = {
@@ -928,30 +1819,55 @@ export type OnDeleteProfileSubscription = {
     contactInfo?: string | null,
     profileImage?: string | null,
     matches?:  {
-      __typename: "ModelChatMessageConnection",
+      __typename: "ModelProfilesToMatchesConnection",
       items:  Array< {
-        __typename: "ChatMessage",
+        __typename: "ProfilesToMatches",
         id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
         createdAt: string,
         updatedAt: string,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    chatMessages?:  {
-      __typename: "ModelChatMessageConnection",
-      items:  Array< {
-        __typename: "ChatMessage",
-        id: string,
-        content: string,
-        sender: SenderType,
-        profileID: string,
-        createdAt: string,
-        updatedAt: string,
-        owner?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -962,108 +1878,519 @@ export type OnDeleteProfileSubscription = {
 
 export type OnCreateMatchSubscriptionVariables = {
   filter?: ModelSubscriptionMatchFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateMatchSubscription = {
   onCreateMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateMatchSubscriptionVariables = {
   filter?: ModelSubscriptionMatchFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateMatchSubscription = {
   onUpdateMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteMatchSubscriptionVariables = {
   filter?: ModelSubscriptionMatchFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteMatchSubscription = {
   onDeleteMatch?:  {
     __typename: "Match",
     id: string,
-    compatibilityScore: number,
-    matchTimestamp: string,
-    profileID: string,
+    profiles?:  {
+      __typename: "ModelProfilesToMatchesConnection",
+      items:  Array< {
+        __typename: "ProfilesToMatches",
+        id: string,
+        profileId: string,
+        matchId: string,
+        profile:  {
+          __typename: "Profile",
+          id: string,
+          name: string,
+          email: string,
+          bio?: string | null,
+          contactInfo?: string | null,
+          profileImage?: string | null,
+          matches?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        match:  {
+          __typename: "Match",
+          id: string,
+          profiles?:  {
+            __typename: "ModelProfilesToMatchesConnection",
+            items:  Array< {
+              __typename: "ProfilesToMatches",
+              id: string,
+              profileId: string,
+              matchId: string,
+              createdAt: string,
+              updatedAt: string,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+        },
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type OnCreateChatMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionChatMessageFilterInput | null,
-  owner?: string | null,
+export type OnCreateProfilesToMatchesSubscriptionVariables = {
+  filter?: ModelSubscriptionProfilesToMatchesFilterInput | null,
+  id?: string | null,
 };
 
-export type OnCreateChatMessageSubscription = {
-  onCreateChatMessage?:  {
-    __typename: "ChatMessage",
+export type OnCreateProfilesToMatchesSubscription = {
+  onCreateProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type OnUpdateChatMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionChatMessageFilterInput | null,
-  owner?: string | null,
+export type OnUpdateProfilesToMatchesSubscriptionVariables = {
+  filter?: ModelSubscriptionProfilesToMatchesFilterInput | null,
+  id?: string | null,
 };
 
-export type OnUpdateChatMessageSubscription = {
-  onUpdateChatMessage?:  {
-    __typename: "ChatMessage",
+export type OnUpdateProfilesToMatchesSubscription = {
+  onUpdateProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
-export type OnDeleteChatMessageSubscriptionVariables = {
-  filter?: ModelSubscriptionChatMessageFilterInput | null,
-  owner?: string | null,
+export type OnDeleteProfilesToMatchesSubscriptionVariables = {
+  filter?: ModelSubscriptionProfilesToMatchesFilterInput | null,
+  id?: string | null,
 };
 
-export type OnDeleteChatMessageSubscription = {
-  onDeleteChatMessage?:  {
-    __typename: "ChatMessage",
+export type OnDeleteProfilesToMatchesSubscription = {
+  onDeleteProfilesToMatches?:  {
+    __typename: "ProfilesToMatches",
     id: string,
-    content: string,
-    sender: SenderType,
-    profileID: string,
+    profileId: string,
+    matchId: string,
+    profile:  {
+      __typename: "Profile",
+      id: string,
+      name: string,
+      email: string,
+      bio?: string | null,
+      contactInfo?: string | null,
+      profileImage?: string | null,
+      matches?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    match:  {
+      __typename: "Match",
+      id: string,
+      profiles?:  {
+        __typename: "ModelProfilesToMatchesConnection",
+        items:  Array< {
+          __typename: "ProfilesToMatches",
+          id: string,
+          profileId: string,
+          matchId: string,
+          profile:  {
+            __typename: "Profile",
+            id: string,
+            name: string,
+            email: string,
+            bio?: string | null,
+            contactInfo?: string | null,
+            profileImage?: string | null,
+            matches?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          match:  {
+            __typename: "Match",
+            id: string,
+            profiles?:  {
+              __typename: "ModelProfilesToMatchesConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };

@@ -1,0 +1,23 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "aimatchmate57a5e807",
+  "functionName": "aimatchmate57a5e807PostConfirmation",
+  "resourceName": "aimatchmate57a5e807PostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "aimatchmate57a5e807PostConfirmation",
+  "skipEdit": true,
+  "permissions": {
+    "api": {
+      "aimatchmate": [
+        "Mutation"
+      ]
+    }
+  }
+}

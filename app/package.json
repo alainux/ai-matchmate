@@ -1,5 +1,5 @@
 {
-  "name": "AIMatchMate",
+  "name": "ai-matchmate",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -21,8 +21,8 @@
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
-    "amazon-cognito-identity-js": "^6.3.5",
-    "aws-amplify": "^5.3.10",
+    "amazon-cognito-identity-js": "^6.3.6",
+    "aws-amplify": "^5.3.11",
     "colord": "^2.9.3",
     "install": "^0.13.0",
     "lodash": "^4.17.21",

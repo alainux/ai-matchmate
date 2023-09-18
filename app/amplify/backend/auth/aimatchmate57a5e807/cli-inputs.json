@@ -60,7 +60,7 @@
     "dependsOn": [
       {
         "category": "function",
-        "resourceName": "aimatchmate57a5e807PreSignup",
+        "resourceName": "aimatchmate57a5e807PostConfirmation",
         "triggerProvider": "Cognito",
         "attributes": [
           "Arn",
@@ -68,20 +68,20 @@
         ]
       }
     ],
-    "thirdPartyAuth": false,
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": {
-      "PreSignup": [
+      "PostConfirmation": [
         "custom"
       ]
     },
     "hostedUI": false,
-    "authProviders": [],
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PreSignUp\",\n    \"lambdaFunctionName\": \"aimatchmate57a5e807PreSignup\"\n  }\n]",
-    "permissions": []
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"aimatchmate57a5e807PostConfirmation\"\n  }\n]",
+    "permissions": [],
+    "authProviders": [],
+    "thirdPartyAuth": true
   }
 }

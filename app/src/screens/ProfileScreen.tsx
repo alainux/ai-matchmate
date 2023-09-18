@@ -11,14 +11,16 @@ import { GraphQLQuery } from '@aws-amplify/api';
 import { API } from 'aws-amplify';
 import { updateProfile } from '../graphql/mutations';
 import {
+  GetProfileQuery,
   Profile,
-  ProfilesByEmailQuery,
   UpdateProfileMutation,
 } from '../types/graphql';
 
 import { useAuthenticator } from '@aws-amplify/ui-react-native';
-import { profilesByEmail } from '../graphql/queries';
+import { getProfile } from '../graphql/queries';
 import { userSelector } from '../utils/aws';
+import { ActivityIndicator } from 'react-native';
+import { PLACEHOLDER_IMAGE } from '../utils/data';
 
 const ProfileContainer = styled.ScrollView(({ theme }) => ({
   flex: 1,
@@ -76,7 +78,7 @@ const PhotoContainer = styled.View(({ theme }) => ({
   marginBottom: theme.tokens.spacer,
 }));
 
-const PLACEHOLDER_IMAGE = 'https://picsum.photos/id/203/800/500.jpg';
+
 
 type ProfileInfo = Pick<
   Profile,
@@ -87,11 +89,12 @@ export const ProfileScreen: React.FC = () => {
   const { user } = useAuthenticator(userSelector);
   const theme = useTheme();
 
-  const [profile, setProfile] = React.useState<ProfileInfo>();
+  const [loading, setLoading] = React.useState(false);
+  const [profile, setProfile] = React.useState<Partial<ProfileInfo>>();
 
   const [touched, setTouched] = React.useState(false);
   const modifyProfileField = (
-    values: Pick<ProfileInfo, 'bio' | 'name' | 'contactInfo'>,
+    values: Pick<Partial<ProfileInfo>, 'bio' | 'name' | 'contactInfo'>,
   ) => {
     setTouched(true);
 
@@ -101,17 +104,28 @@ export const ProfileScreen: React.FC = () => {
     });
   };
 
-  const fetchProfile = async (email: string) => {
+  const fetchProfile = async (id: string) => {
+    setLoading(true);
     try {
-      const result = await API.graphql<GraphQLQuery<ProfilesByEmailQuery>>({
-        query: profilesByEmail,
+      const result = await API.graphql<GraphQLQuery<GetProfileQuery>>({
+        query: getProfile,
         variables: {
-          email: email,
+          id: id,
         },
       });
 
-      const profile =
-        (result?.data?.profilesByEmail?.items?.[0] as Profile) ?? null;
+      const profile = result?.data?.getProfile;
+
+      if (!profile) {
+        console.log(
+          'no profile found for user',
+          { id },
+          JSON.stringify(result, null, 4),
+        );
+        return;
+      }
+
+      console.log({ id }, JSON.stringify(profile, null, 4));
 
       const profileData = {
         id: profile.id,
@@ -125,11 +139,14 @@ export const ProfileScreen: React.FC = () => {
       setProfile(profileData);
       setTouched(false);
     } catch (e) {
-      console.log('error fetching user profile', e);
+      console.log('error fetching user profile', { id }, e);
+    } finally {
+      setLoading(false);
     }
   };
 
   const onUpdateProfile = async () => {
+    setLoading(true);
     try {
       await API.graphql<GraphQLQuery<UpdateProfileMutation>>({
         query: updateProfile,
@@ -140,24 +157,38 @@ export const ProfileScreen: React.FC = () => {
       setTouched(false);
     } catch (e) {
       console.log('error updating user profile', e);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (user?.attributes?.email) {
-      fetchProfile(user.attributes.email);
+    if (user?.attributes?.sub) {
+      fetchProfile(user.attributes.sub);
+    } else {
+      console.log('No sub for user');
     }
   }, [user]);
 
-  if (!profile) {
-    return <ProfileContainer>{/* Loading */}</ProfileContainer>;
+  if (loading) {
+    return (
+      <ProfileContainer>
+        <ActivityIndicator />
+      </ProfileContainer>
+    );
+  } else if (!profile) {
+    return (
+      <ProfileContainer>
+        <SignOutButton />
+      </ProfileContainer>
+    );
   }
 
   return (
     <ProfileContainer>
       <PhotoContainer>
         <ProfileImage
-          source={{ uri: profile?.profileImage ?? PLACEHOLDER_IMAGE }}
+          source={{ uri: profile.profileImage ?? PLACEHOLDER_IMAGE }}
         />
 
         <Button

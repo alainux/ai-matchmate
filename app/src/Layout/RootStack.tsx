@@ -6,11 +6,12 @@ import { TabsLayout } from './TabsLayout';
 import { MatchDetailsScreen } from '../screens/MatchDetailsScreen';
 import { matchesData } from '../utils/data';
 import { theme } from '../utils/theme';
+import { Profile } from '../types/graphql';
 
 export type RootStackParamList = {
   Splash: undefined;
   TabsLayout: undefined;
-  MatchDetails: { match: (typeof matchesData)[0] };
+  MatchDetails: { match: Profile };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

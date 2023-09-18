@@ -16,9 +16,11 @@ exports.handler = async (event, context) => {
     }
   `;
 
+  console.log('GOT USER EVENT', JSON.stringify(event, null, 4));
+
   const variables = {
     input: {
-      // id: event.request.userAttributes.sub,
+      id: event.request.userAttributes.sub,
       name: 'No name',
       email: event.request.userAttributes.email,
       bio: 'No bio',
@@ -41,10 +43,14 @@ exports.handler = async (event, context) => {
   try {
     const res = await fetch(GRAPHQL_ENDPOINT, options);
     response.data = await res.json();
+
     if (response.data.errors) {
       response.statusCode = 400;
     }
+
+    console.log('USER creation success');
   } catch (error) {
+    console.log('ERROR creating user', error);
     response.statusCode = 400;
     response.body = {
       errors: [
