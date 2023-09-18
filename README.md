@@ -482,7 +482,7 @@ Use a Cognito user pool configured as a part of this project.
 
 Amplify will create a schema.graphql file within the `amplify/backend/api/{yourApiName}/` directory. This is where you'll define your data types and relationships.
 
-https://github.com/alainux/ai-matchmate/blob/807d37e4b6c04bcf4e1346c1985569a215047b10/app/amplify/backend/api/aimatchmate/schema.graphql#L1-L37
+https://github.com/alainux/ai-matchmate/blob/b9e839288b8ecaa53f4dabe20eef855e76d92f49/app/amplify/backend/api/aimatchmate/schema.graphql#L1-L32
 
 This schema will add the required models **Profile**, **Match**, and **ChatMessage** and their required authentication directives based on the AWS syntax, which can be referred to from the [official docs](https://docs.amplify.aws/cli/graphql/data-modeling/).
 
@@ -525,17 +525,17 @@ re)
  Do you want to use an OAuth flow? No
 ? Do you want to configure Lambda Triggers for Cognito? Yes
 ? Which triggers do you want to enable for Cognito Pre Sign-up
-? What functionality do you want to use for Pre Sign-up Create your own module
-✅ Successfully added resource aimatchmateXXXXPreSignup locally.
+? What functionality do you want to use for Post-Confirmation: Create your own module
+✅ Successfully added resource aimatchmateXXXXPostConfirmation locally.
 ```
 
-This will create a lambda function for your Pre-Signup stage and prompt you to edit it. For the code, we are going to call the GraphQL API to create the resource, but before, we need to give the lambda function access to the API, so we will execute the following: 
+This will create a lambda function for your Post-Confirmation stage and prompt you to edit it. For the code, we are going to call the GraphQL API to create the resource, but before, we need to give the lambda function access to the API, so we will execute the following: 
 
 ```sh
 % amplify update function 
-? Select the Lambda function you want to update aimatchmate57a5e807PreSignup
+? Select the Lambda function you want to update aimatchmateXXXXPostConfirmation
 General information
-- Name: aimatchmate57a5e807PreSignup
+- Name: aimatchmateXXXXPostConfirmation
 - Runtime: nodejs
 
 Resource access permission
@@ -565,7 +565,7 @@ You can access the following resource attributes as environment variables from y
 
 This will prompt you to the same file, which you can now edit. Take note of the used environment variables.
 
-https://github.com/alainux/ai-matchmate/blob/a1fdc76075fb56c8d54ff8cb55d53b9a8b3ce664/app/amplify/backend/function/aimatchmate57a5e807PreSignup/src/custom.js#L1-L71
+https://github.com/alainux/ai-matchmate/blob/b9e839288b8ecaa53f4dabe20eef855e76d92f49/app/amplify/backend/function/aimatchmate57a5e807PostConfirmation/src/custom.js#L1-L69
 
 We can now register with the app and we will see a user being created in the AWS Cognito dashboard. We will also be able to get the corresponding user profile for that user.
 
@@ -613,35 +613,17 @@ Go ahead and create the lambda function:
 ✅ Successfully added resource createMatch locally.
 ```
 
+Considering that we have the right schema, we will go ahead and write the createMatch lambda function:
 
+https://github.com/alainux/ai-matchmate/blob/b9e839288b8ecaa53f4dabe20eef855e76d92f49/app/amplify/backend/function/createMatch/src/index.js#L1-L118
+
+Make sure to run `amplify configure function` in order to grant it access to the API. 
 
 ##### Invoking createMatch:
 Once potential matches have been determined (be it through AI logic, user input, or other methods), it's time to solidify these connections using our createMatch function.
 
-javascript
-Copy code
-const createMatch = async (profileID1, profileID2) => {
-  // Store the match in DynamoDB
-  const matchData = {
-    id: generateUniqueID(), // This function generates a unique ID for the match
-    profile1: profileID1,
-    profile2: profileID2,
-    timestamp: new Date().toISOString(),
-  };
+<img width="1620" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/d0d18386-aa48-4450-b0f9-2d870ea445a5">
 
-  try {
-    await dynamoDB.put({
-      TableName: 'MatchesTable',
-      Item: matchData,
-    }).promise();
+By invoking createMatch, you're taking the potential matches determined by your matchmaking logic and giving them tangible form within the app's infrastructure. This ensures users can view, interact with, and benefit from the connections the app facilitates. After this, you will be able to query the API using any client and see the matches.
 
-    // If real-time notifications are being used
-    notifyUsersOfMatch(profileID1, profileID2); // This function handles notifying the respective users of their new match
-
-    return matchData;
-  } catch (error) {
-    console.error("Error creating match:", error);
-    throw new Error("Failed to create match");
-  }
-};
-By invoking createMatch, you're taking the potential matches determined by your matchmaking logic and giving them tangible form within the app's infrastructure. This ensures users can view, interact with, and benefit from the connections the app facilitates.
+<img width="1500" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/3e037b14-41bf-42ed-8872-578ca673989f">
