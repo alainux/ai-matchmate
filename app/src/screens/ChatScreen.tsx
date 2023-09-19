@@ -2,9 +2,15 @@ import styled from '@emotion/native';
 import { useTheme } from '@emotion/react';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import { MessageBubble } from '../components/MessageBubble';
+import { API } from 'aws-amplify';
+import { messagesByProfileId } from '../graphql/queries';
+import { useAuthenticator } from '@aws-amplify/ui-react-native';
+import { userSelector } from '../utils/aws';
+import { Message, MessagesByProfileIdQuery, SenderType } from '../types/graphql';
+import { GraphQLQuery } from '@aws-amplify/api';
 
 
 const ChatContainer = styled.View(({ theme }) => ({
@@ -35,55 +41,62 @@ const ChatInput = styled.TextInput(({ theme }) => ({
 }));
 
 export const ChatScreen: React.FC = () => {
+  const { user } = useAuthenticator(userSelector);
   const theme = useTheme();
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [chatlog, setChatlog] = useState<Array<Message | null>>([]);
 
-  // Sample chat log tailored for AI MatchMate application
-  const chatLog = [
-    {
-      message:
-        'Hello! Welcome to AI MatchMate. Ready to find your perfect match?',
-      sent: false,
-    },
-    { message: "Hi! Yes, I'm curious to see how this works.", sent: true },
-    {
-      message:
-        "Great! Just answer a few questions and I'll find the best matches for you.",
-      sent: false,
-    },
-    { message: "Sounds interesting. Let's do it!", sent: true },
-    {
-      message: 'Awesome! First, tell me about your favorite hobbies.',
-      sent: false,
-    },
-    { message: 'I love reading, hiking, and listening to music.', sent: true },
-    {
-      message: 'Noted. And what qualities are you looking for in a match?',
-      sent: false,
-    },
-    {
-      message:
-        "I'd like someone with a good sense of humor, kind, and shares similar interests.",
-      sent: true,
-    },
-    {
-      message: 'Got it! Give me a moment to process this information.',
-      sent: false,
-    },
-    { message: 'Alright, take your time.', sent: true },
-    {
-      message:
-        "Great news! I've found a few potential matches for you. Check them out in the 'Matches' tab.",
-      sent: false,
-    },
-    { message: 'Thanks! Excited to see my matches.', sent: true },
-  ];
+  const fetchMessages = async (id: string) => {
+    setLoading(true);
+    try {
+      const result = await API.graphql<GraphQLQuery<MessagesByProfileIdQuery>>({
+        query: messagesByProfileId,
+        variables: {
+          profileId: id,
+        },
+      });
+
+      const messages = result?.data?.messagesByProfileId?.items;
+
+      if (!messages) {
+        console.log(
+          'no messages found for user',
+          { id },
+          JSON.stringify(result, null, 4),
+        );
+        return;
+      }
+
+      console.log({ id }, JSON.stringify(messages, null, 4));
+
+      setChatlog(messages);
+    } catch (e) {
+      console.log('error fetching messages', { id }, e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.attributes?.sub) {
+      fetchMessages(user.attributes.sub);
+    }
+  },[]);
+
+  if (loading) {
+    return (
+      <ChatContainer>
+        <ActivityIndicator />
+      </ChatContainer>
+    );
+  }
 
   return (
     <ChatContainer>
       <MessageLog showsVerticalScrollIndicator={false}>
-        {chatLog.map((chat, index) => (
-          <MessageBubble key={index} message={chat.message} sent={chat.sent} />
+        {chatlog.map((chat, index) => chat && (
+          <MessageBubble key={index} message={chat?.content} sent={chat.sender === SenderType.USER} />
         ))}
       </MessageLog>
 
@@ -92,6 +105,7 @@ export const ChatScreen: React.FC = () => {
         <TouchableOpacity
           onPress={() => {
             // TODO: Handle sending the message here
+            setChatlog(chatlog => [...chatlog, { content: message, sender: SenderType.USER } as Message]);
             setMessage(''); // Reset the input field
           }}>
           <FontAwesomeIcon

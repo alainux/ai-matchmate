@@ -17,6 +17,7 @@ type Profile
   contactInfo: String
   profileImage: String
   matches: [Match!]! @manyToMany(relationName: "ProfilesToMatches")
+  messages: [Message!]! @hasMany(indexName: "byProfile", fields: ["id"])
 }
 
 type Match
@@ -29,4 +30,25 @@ type Match
   ) {
   id: ID!
   profiles: [Profile!]! @manyToMany(relationName: "ProfilesToMatches")
+}
+
+enum SenderType {
+  USER
+  AI
+}
+
+type Message
+  @model
+  @auth(
+    rules: [
+      { allow: public, provider: apiKey }
+      { allow: owner, operations: [read], ownerField: "profileId", provider: userPools }
+    ]
+  ) {
+  id: ID!
+  profileId: ID! @index(name: "byProfile")
+  profile: Profile @belongsTo(fields: ["profileId"])
+  content: String!
+  sender: SenderType!
+  timestamp: AWSDateTime! # YYYY-MM-DDThh:mm:ss.sssZ
 }

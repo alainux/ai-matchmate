@@ -38,6 +38,20 @@ export const createProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
             createdAt
             updatedAt
             __typename
@@ -60,6 +74,57 @@ export const createProfile = /* GraphQL */ `
             updatedAt
             __typename
           }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      messages {
+        items {
+          id
+          profileId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          sender
+          timestamp
           createdAt
           updatedAt
           __typename
@@ -109,6 +174,20 @@ export const updateProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
             createdAt
             updatedAt
             __typename
@@ -131,6 +210,57 @@ export const updateProfile = /* GraphQL */ `
             updatedAt
             __typename
           }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      messages {
+        items {
+          id
+          profileId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          sender
+          timestamp
           createdAt
           updatedAt
           __typename
@@ -180,6 +310,20 @@ export const deleteProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
             createdAt
             updatedAt
             __typename
@@ -202,6 +346,57 @@ export const deleteProfile = /* GraphQL */ `
             updatedAt
             __typename
           }
+          createdAt
+          updatedAt
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      messages {
+        items {
+          id
+          profileId
+          profile {
+            id
+            name
+            email
+            bio
+            contactInfo
+            profileImage
+            matches {
+              items {
+                id
+                profileId
+                matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          content
+          sender
+          timestamp
           createdAt
           updatedAt
           __typename
@@ -239,6 +434,20 @@ export const createMatch = /* GraphQL */ `
                 id
                 profileId
                 matchId
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
                 createdAt
                 updatedAt
                 __typename
@@ -312,6 +521,20 @@ export const updateMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
             createdAt
             updatedAt
             __typename
@@ -378,6 +601,20 @@ export const deleteMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            messages {
+              items {
+                id
+                profileId
+                content
+                sender
+                timestamp
+                createdAt
+                updatedAt
+                __typename
+              }
+              nextToken
+              __typename
+            }
             createdAt
             updatedAt
             __typename
@@ -407,6 +644,312 @@ export const deleteMatch = /* GraphQL */ `
         nextToken
         __typename
       }
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    createMessage(input: $input, condition: $condition) {
+      id
+      profileId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      content
+      sender
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateMessage = /* GraphQL */ `
+  mutation UpdateMessage(
+    $input: UpdateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    updateMessage(input: $input, condition: $condition) {
+      id
+      profileId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      content
+      sender
+      timestamp
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      id
+      profileId
+      profile {
+        id
+        name
+        email
+        bio
+        contactInfo
+        profileImage
+        matches {
+          items {
+            id
+            profileId
+            matchId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            match {
+              id
+              profiles {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      content
+      sender
+      timestamp
       createdAt
       updatedAt
       __typename
@@ -445,6 +988,10 @@ export const createProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              messages {
+                nextToken
+                __typename
+              }
               createdAt
               updatedAt
               __typename
@@ -459,6 +1006,39 @@ export const createProfilesToMatches = /* GraphQL */ `
               updatedAt
               __typename
             }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
             createdAt
             updatedAt
             __typename
@@ -485,6 +1065,10 @@ export const createProfilesToMatches = /* GraphQL */ `
               contactInfo
               profileImage
               matches {
+                nextToken
+                __typename
+              }
+              messages {
                 nextToken
                 __typename
               }
@@ -551,6 +1135,10 @@ export const updateProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              messages {
+                nextToken
+                __typename
+              }
               createdAt
               updatedAt
               __typename
@@ -565,6 +1153,39 @@ export const updateProfilesToMatches = /* GraphQL */ `
               updatedAt
               __typename
             }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
             createdAt
             updatedAt
             __typename
@@ -591,6 +1212,10 @@ export const updateProfilesToMatches = /* GraphQL */ `
               contactInfo
               profileImage
               matches {
+                nextToken
+                __typename
+              }
+              messages {
                 nextToken
                 __typename
               }
@@ -657,6 +1282,10 @@ export const deleteProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              messages {
+                nextToken
+                __typename
+              }
               createdAt
               updatedAt
               __typename
@@ -671,6 +1300,39 @@ export const deleteProfilesToMatches = /* GraphQL */ `
               updatedAt
               __typename
             }
+            createdAt
+            updatedAt
+            __typename
+          }
+          nextToken
+          __typename
+        }
+        messages {
+          items {
+            id
+            profileId
+            profile {
+              id
+              name
+              email
+              bio
+              contactInfo
+              profileImage
+              matches {
+                nextToken
+                __typename
+              }
+              messages {
+                nextToken
+                __typename
+              }
+              createdAt
+              updatedAt
+              __typename
+            }
+            content
+            sender
+            timestamp
             createdAt
             updatedAt
             __typename
@@ -697,6 +1359,10 @@ export const deleteProfilesToMatches = /* GraphQL */ `
               contactInfo
               profileImage
               matches {
+                nextToken
+                __typename
+              }
+              messages {
                 nextToken
                 __typename
               }
