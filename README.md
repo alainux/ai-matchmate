@@ -627,3 +627,38 @@ Once potential matches have been determined (be it through AI logic, user input,
 By invoking createMatch, you're taking the potential matches determined by your matchmaking logic and giving them tangible form within the app's infrastructure. This ensures users can view, interact with, and benefit from the connections the app facilitates. After this, you will be able to query the API using any client and see the matches.
 
 <img width="1500" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/3e037b14-41bf-42ed-8872-578ca673989f">
+
+#### 6. Building the AI-Driven Chat
+
+The chat interface in AI MatchMate isn't just another messaging system; it's the heart of the application. The chat screen's purpose is multi-faceted: it not only engages users with AI-driven conversations but also helps in building a comprehensive psychological-emotional profile of the user. This profile becomes the cornerstone of the app's matchmaking process.
+
+##### Understanding the AI-driven Chat Process:
+
+**Initiating Conversation**: When a user enters the chat screen, the AI (MatchMate Bot) initiates the conversation, greeting the user and setting the tone.
+
+**Probing Questions**: The AI starts asking open-ended questions. Each question is designed to reveal more about the user's personality, preferences, values, emotional state, and more. For instance, questions like:
+
+- "What's your idea of a perfect weekend?"
+- "How do you handle stress or conflict?"
+- "Describe a memorable experience from your past."
+
+**Building the Profile**: As the user responds, the AI interprets the answers and continually refines the user's psychological-emotional profile. This profile can have dimensions such as:
+
+- **Emotional Stability**: Measures the user's ability to stay stable under pressure or stress.
+- **Extraversion/Introversion**: Determines if a user is outgoing or reserved.
+- **Openness**: Evaluates a user's willingness to experience new things.
+- **Agreeableness**: Assesses a user's cooperative nature.
+- **Conscientiousness**: Measures reliability and organization.
+
+_Note_: This structure is inspired by the "Big Five" personality traits, which is a widely accepted personality theory. However, for simplicity, we're keeping it at these five dimensions.
+
+**Storing the Profile**: Once the chat reaches a certain threshold, or the user decides to end it, the AI saves the profile to the user's record in the database using AppSync.
+
+**Matchmaking**: With the psychological-emotional profile in place, the matchmaking process, which runs periodically or on-demand, checks profiles against each other. Profiles with complementary traits or closely matching values have a higher compatibility score. When a match is found, the createMatch function is invoked with both profile IDs.
+
+##### Code implementation
+
+First we will augment our schema to include a `Messages` object that we will use to keep track of the user's conversation with the AI.
+
+https://github.com/alainux/ai-matchmate/blob/1249870d8d27c8c6e9eaec43c62267cb4d198e32/app/amplify/backend/api/aimatchmate/schema.graphql#L40-L54
+
