@@ -688,3 +688,7 @@ We will create an amplify function and configure it to have API access:
 ? Select the operations you want to permit on aimatchmate Mutation
 ```
 
+###### ChatScreen Updates
+
+<img width="1374" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/cf4548b8-925b-4da2-8bc7-898c0d452ece">
+
