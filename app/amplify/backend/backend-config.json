@@ -147,7 +147,7 @@
         }
       ]
     },
-    "AMPLIFY_function_createAiMessage_openaiApiKey": {
+    "AMPLIFY_function_createAiMessage_s3Key": {
       "usedBy": [
         {
           "category": "function",
@@ -155,7 +155,7 @@
         }
       ]
     },
-    "AMPLIFY_function_createAiMessage_s3Key": {
+    "AMPLIFY_function_createAiMessage_secretsPathAmplifyAppId": {
       "usedBy": [
         {
           "category": "function",

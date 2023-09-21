@@ -1,3 +1,17 @@
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["OPENAI_API_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
 /* Amplify Params - DO NOT EDIT
 	API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT
 	API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT
@@ -10,14 +24,14 @@ Amplify Params - DO NOT EDIT */
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 
+const aws = require('aws-sdk');
 const OpenAI = require('openai');
 
 const GRAPHQL_ENDPOINT = process.env.API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT;
 const GRAPHQL_API_KEY = process.env.API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT;
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+
+
 
 const SYSTEM_MESSAGE =
   'You are a trained psychologist with expertise in creating psychological profiles. Your purpose is to engage with the user in a respectful, understanding, and non-judgmental manner. Ask probing questions to understand their personality, preferences, and emotional state. Based on their responses, update their psychological profile and occasionally provide a concise, positive, and relatable description of their personality. Ensure the conversation remains professional, enjoyable and maintain confidentiality. Aim to make the user feel comfortable and heard, and the conversation should flow naturally. Remember, your goal is to understand and represent them accurately. This information will be used for a match-making service.';
@@ -161,6 +175,21 @@ async function createMessage(userId, messageContent, sender, metadata) {
   return resJSON;
 }
 
+const getOpenAIAPIKeySecret = async () => {
+  const { Parameters } = await (new aws.SSM())
+    .getParameters({
+      Names: ["OPENAI_API_KEY"].map(secretName => process.env[secretName]),
+      WithDecryption: true,
+    })
+    .promise();
+
+  const apiKeySecret = Parameters.find(param => param.Name === process.env.OPENAI_API_KEY)
+  if (!apiKeySecret) {
+    throw new Error('Missing OpenAI API key secret');
+  }
+  return apiKeySecret;
+}
+
 // @ts-check
 exports.handler = async event => {
   console.log('RECEIVED EVENT', JSON.stringify(event, null, 4));
@@ -171,6 +200,12 @@ exports.handler = async event => {
       body: 'Invalid arguments',
     };
   }
+
+  // Initialize openai  
+  const openAIAPIKeySecret = await getOpenAIAPIKeySecret();
+  const openai = new OpenAI({
+    apiKey: openAIAPIKeySecret.Value,
+  });
 
   try {
     const userMessage = event.arguments.message;
@@ -275,7 +310,7 @@ exports.handler = async event => {
     );
 
     // Create the user's message:
-    await createMessage(userId, userMessage, 'USER');
+    // await createMessage(userId, userMessage, 'USER');
 
     const { next_message, ...profile } = responseArguments;
     // Update the user's profile in the database
@@ -283,10 +318,10 @@ exports.handler = async event => {
       ...currentProfile,
       ...profile
     };
-    await updateProfileTraits(userId, newProfile);
+    // await updateProfileTraits(userId, newProfile);
 
     // Create response message:
-    await createMessage(userId, responseArguments.next_message, 'AI', { profileSnapshot: newProfile });
+    // await createMessage(userId, responseArguments.next_message, 'AI', { profileSnapshot: newProfile });
 
     return JSON.stringify({
       profile,
