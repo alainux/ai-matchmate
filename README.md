@@ -660,10 +660,9 @@ _Note_: This structure is inspired by the "Big Five" personality traits, which i
 
 ###### Schema Changes for Messages
 
-First we will augment our schema to include a `Messages` type that we will use to keep track of the user's conversation with the AI.
+First we will augment our schema to include a `Messages` type that we will use to keep track of the user's conversation with the AI. We will also add a `traits` property to both the profile and the message. This property will help us keep track of the user's psychological profile.
 
-https://github.com/alainux/ai-matchmate/blob/1249870d8d27c8c6e9eaec43c62267cb4d198e32/app/amplify/backend/api/aimatchmate/schema.graphql#L40-L54
-
+https://github.com/alainux/ai-matchmate/blob/4241504e7ed9f337d3887b778d919ad1ed4f87e0/app/amplify/backend/api/aimatchmate/schema.graphql#L5-L60
 
 ###### Lambda for Answering Messages & Updating Personality Traits:
 
@@ -691,9 +690,19 @@ We will create an amplify function and configure it to have API access:
 Also, make sure to also add the Open API key to your function using secret values (SSM). This is done by selecting "secret values configuration" in `amplify configure function`.
 We are now ready to write the lambda code. 
 
+https://github.com/alainux/ai-matchmate/blob/4241504e7ed9f337d3887b778d919ad1ed4f87e0/app/amplify/backend/function/createAiMessage/src/index.js#L1-L345
 
+This will use the `function_calls` functionality of the OpenAI ChatGPT API to make it keep track of a psychological profile of the person and ask follow-up questions in order to update our profile, which we will save in the updated profile and message properties.
+
+**Why keep track of traits state on every message?** Because when delivering the message history to the AI (last 10 messages), we want to show the AI how each message affects the profile, giving it adequate context on how to respond.
 
 ###### ChatScreen Updates
+
+We are now ready to update our ChatScreen.tsx file and we can start conversing with the AI and having the user's psychological profile updated.
+
+https://github.com/alainux/ai-matchmate/blob/4241504e7ed9f337d3887b778d919ad1ed4f87e0/app/src/screens/ChatScreen.tsx#L1-L202
+
+As shown in the image, the AI responds with a message and updates the state of the psychological profile at the same time.
 
 <img width="1374" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/cf4548b8-925b-4da2-8bc7-898c0d452ece">
 
