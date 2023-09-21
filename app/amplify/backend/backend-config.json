@@ -89,6 +89,22 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "createAiMessage": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "aimatchmate"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "createMatch": {
       "build": true,
       "dependsOn": [
@@ -120,6 +136,30 @@
         {
           "category": "function",
           "resourceName": "aimatchmate57a5e807PostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_createAiMessage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createAiMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_createAiMessage_openaiApiKey": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createAiMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_createAiMessage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createAiMessage"
         }
       ]
     },

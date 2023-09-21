@@ -24,6 +24,11 @@
         "aimatchmate57a5e807PostConfirmation": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
           "s3Key": "amplify-builds/aimatchmate57a5e807PostConfirmation-36756f3367365178344b-build.zip"
+        },
+        "createAiMessage": {
+          "openaiApiKey": "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",
+          "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
+          "s3Key": "amplify-builds/createAiMessage-38344143426d44696152-build.zip"
         }
       },
       "api": {

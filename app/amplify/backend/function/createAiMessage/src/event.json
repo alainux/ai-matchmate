@@ -1,0 +1,16 @@
+{
+  "arguments": {
+    "userId": "dfe1c991-8739-411a-9298-b66df620e861",
+    "message": "My name is Alain, and I'm a software engineer that works a lot during the week but enjoys going out on the weekends. Usually introverted except with the right people.",
+    "currentProfile": {
+      "emotional_stability": 0.7,
+      "extraversion": 0.5,
+      "openness": 0.9,
+      "agreeableness": 0.6,
+      "conscientiousness": 0.8,
+      "profiling_stage": "initial",
+      "personality_description": "An analytical mind with a passion for art.",
+      "next_message": ""
+    }
+  }
+}

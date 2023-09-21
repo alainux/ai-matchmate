@@ -41,7 +41,7 @@ export const getProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -49,6 +49,7 @@ export const getProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -107,7 +108,7 @@ export const getProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -115,13 +116,14 @@ export const getProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
           }
           content
           sender
-          timestamp
+          metadata
           createdAt
           updatedAt
           __typename
@@ -129,6 +131,7 @@ export const getProfile = /* GraphQL */ `
         nextToken
         __typename
       }
+      traits
       createdAt
       updatedAt
       __typename
@@ -169,6 +172,7 @@ export const listProfiles = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -209,13 +213,14 @@ export const listProfiles = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -223,6 +228,7 @@ export const listProfiles = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
@@ -266,7 +272,7 @@ export const getMatch = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -274,6 +280,7 @@ export const getMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -338,6 +345,7 @@ export const listMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -400,6 +408,7 @@ export const getMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -440,13 +449,14 @@ export const getMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -454,13 +464,14 @@ export const getMessage = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
       }
       content
       sender
-      timestamp
+      metadata
       createdAt
       updatedAt
       __typename
@@ -496,6 +507,7 @@ export const listMessages = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -524,13 +536,14 @@ export const listMessages = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
               }
               content
               sender
-              timestamp
+              metadata
               createdAt
               updatedAt
               __typename
@@ -538,13 +551,14 @@ export const listMessages = /* GraphQL */ `
             nextToken
             __typename
           }
+          traits
           createdAt
           updatedAt
           __typename
         }
         content
         sender
-        timestamp
+        metadata
         createdAt
         updatedAt
         __typename
@@ -554,16 +568,18 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
-export const messagesByProfileId = /* GraphQL */ `
-  query MessagesByProfileId(
+export const messagesByProfileIdAndCreatedAt = /* GraphQL */ `
+  query MessagesByProfileIdAndCreatedAt(
     $profileId: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelMessageFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    messagesByProfileId(
+    messagesByProfileIdAndCreatedAt(
       profileId: $profileId
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -591,6 +607,7 @@ export const messagesByProfileId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -619,13 +636,14 @@ export const messagesByProfileId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
               }
               content
               sender
-              timestamp
+              metadata
               createdAt
               updatedAt
               __typename
@@ -633,13 +651,14 @@ export const messagesByProfileId = /* GraphQL */ `
             nextToken
             __typename
           }
+          traits
           createdAt
           updatedAt
           __typename
         }
         content
         sender
-        timestamp
+        metadata
         createdAt
         updatedAt
         __typename
@@ -682,6 +701,7 @@ export const getProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -722,13 +742,14 @@ export const getProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -736,6 +757,7 @@ export const getProfilesToMatches = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
@@ -762,6 +784,7 @@ export const getProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -827,6 +850,7 @@ export const listProfilesToMatches = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -855,13 +879,14 @@ export const listProfilesToMatches = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
               }
               content
               sender
-              timestamp
+              metadata
               createdAt
               updatedAt
               __typename
@@ -869,6 +894,7 @@ export const listProfilesToMatches = /* GraphQL */ `
             nextToken
             __typename
           }
+          traits
           createdAt
           updatedAt
           __typename
@@ -887,6 +913,7 @@ export const listProfilesToMatches = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -955,6 +982,7 @@ export const profilesToMatchesByProfileId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -983,13 +1011,14 @@ export const profilesToMatchesByProfileId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
               }
               content
               sender
-              timestamp
+              metadata
               createdAt
               updatedAt
               __typename
@@ -997,6 +1026,7 @@ export const profilesToMatchesByProfileId = /* GraphQL */ `
             nextToken
             __typename
           }
+          traits
           createdAt
           updatedAt
           __typename
@@ -1015,6 +1045,7 @@ export const profilesToMatchesByProfileId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -1083,6 +1114,7 @@ export const profilesToMatchesByMatchId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
@@ -1111,13 +1143,14 @@ export const profilesToMatchesByMatchId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename
               }
               content
               sender
-              timestamp
+              metadata
               createdAt
               updatedAt
               __typename
@@ -1125,6 +1158,7 @@ export const profilesToMatchesByMatchId = /* GraphQL */ `
             nextToken
             __typename
           }
+          traits
           createdAt
           updatedAt
           __typename
@@ -1143,6 +1177,7 @@ export const profilesToMatchesByMatchId = /* GraphQL */ `
                 bio
                 contactInfo
                 profileImage
+                traits
                 createdAt
                 updatedAt
                 __typename

@@ -2,6 +2,10 @@ input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 }
 
+type Mutation {
+  sendChatMessage(userId: ID!, currentProfile: AWSJSON!, message: String!): String @function(name: "createAiMessage-${env}")
+}
+
 type Profile
   @model
   @auth(
@@ -18,6 +22,7 @@ type Profile
   profileImage: String
   matches: [Match!]! @manyToMany(relationName: "ProfilesToMatches")
   messages: [Message!]! @hasMany(indexName: "byProfile", fields: ["id"])
+  traits: AWSJSON
 }
 
 type Match
@@ -45,10 +50,11 @@ type Message
       { allow: owner, operations: [read], ownerField: "profileId", provider: userPools }
     ]
   ) {
-  id: ID!
-  profileId: ID! @index(name: "byProfile")
+  id: ID! 
+  profileId: ID! @index(name: "byProfile", sortKeyFields: ["createdAt"])
   profile: Profile @belongsTo(fields: ["profileId"])
   content: String!
   sender: SenderType!
-  timestamp: AWSDateTime! # YYYY-MM-DDThh:mm:ss.sssZ
+  metadata: AWSJSON
+  createdAt: AWSDateTime!
 }

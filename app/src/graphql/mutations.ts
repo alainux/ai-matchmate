@@ -2,6 +2,19 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const sendChatMessage = /* GraphQL */ `
+  mutation SendChatMessage(
+    $userId: ID!
+    $currentProfile: AWSJSON!
+    $message: String!
+  ) {
+    sendChatMessage(
+      userId: $userId
+      currentProfile: $currentProfile
+      message: $message
+    )
+  }
+`;
 export const createProfile = /* GraphQL */ `
   mutation CreateProfile(
     $input: CreateProfileInput!
@@ -44,7 +57,7 @@ export const createProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -52,6 +65,7 @@ export const createProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -110,7 +124,7 @@ export const createProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -118,13 +132,14 @@ export const createProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
           }
           content
           sender
-          timestamp
+          metadata
           createdAt
           updatedAt
           __typename
@@ -132,6 +147,7 @@ export const createProfile = /* GraphQL */ `
         nextToken
         __typename
       }
+      traits
       createdAt
       updatedAt
       __typename
@@ -180,7 +196,7 @@ export const updateProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -188,6 +204,7 @@ export const updateProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -246,7 +263,7 @@ export const updateProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -254,13 +271,14 @@ export const updateProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
           }
           content
           sender
-          timestamp
+          metadata
           createdAt
           updatedAt
           __typename
@@ -268,6 +286,7 @@ export const updateProfile = /* GraphQL */ `
         nextToken
         __typename
       }
+      traits
       createdAt
       updatedAt
       __typename
@@ -316,7 +335,7 @@ export const deleteProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -324,6 +343,7 @@ export const deleteProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -382,7 +402,7 @@ export const deleteProfile = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -390,13 +410,14 @@ export const deleteProfile = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
           }
           content
           sender
-          timestamp
+          metadata
           createdAt
           updatedAt
           __typename
@@ -404,6 +425,7 @@ export const deleteProfile = /* GraphQL */ `
         nextToken
         __typename
       }
+      traits
       createdAt
       updatedAt
       __typename
@@ -447,7 +469,7 @@ export const createMatch = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -455,6 +477,7 @@ export const createMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -527,7 +550,7 @@ export const updateMatch = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -535,6 +558,7 @@ export const updateMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -607,7 +631,7 @@ export const deleteMatch = /* GraphQL */ `
                 profileId
                 content
                 sender
-                timestamp
+                metadata
                 createdAt
                 updatedAt
                 __typename
@@ -615,6 +639,7 @@ export const deleteMatch = /* GraphQL */ `
               nextToken
               __typename
             }
+            traits
             createdAt
             updatedAt
             __typename
@@ -685,6 +710,7 @@ export const createMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -725,13 +751,14 @@ export const createMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -739,13 +766,14 @@ export const createMessage = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
       }
       content
       sender
-      timestamp
+      metadata
       createdAt
       updatedAt
       __typename
@@ -787,6 +815,7 @@ export const updateMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -827,13 +856,14 @@ export const updateMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -841,13 +871,14 @@ export const updateMessage = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
       }
       content
       sender
-      timestamp
+      metadata
       createdAt
       updatedAt
       __typename
@@ -889,6 +920,7 @@ export const deleteMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -929,13 +961,14 @@ export const deleteMessage = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -943,13 +976,14 @@ export const deleteMessage = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
       }
       content
       sender
-      timestamp
+      metadata
       createdAt
       updatedAt
       __typename
@@ -992,6 +1026,7 @@ export const createProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -1032,13 +1067,14 @@ export const createProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -1046,6 +1082,7 @@ export const createProfilesToMatches = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
@@ -1072,6 +1109,7 @@ export const createProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -1139,6 +1177,7 @@ export const updateProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -1179,13 +1218,14 @@ export const updateProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -1193,6 +1233,7 @@ export const updateProfilesToMatches = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
@@ -1219,6 +1260,7 @@ export const updateProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -1286,6 +1328,7 @@ export const deleteProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
@@ -1326,13 +1369,14 @@ export const deleteProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename
             }
             content
             sender
-            timestamp
+            metadata
             createdAt
             updatedAt
             __typename
@@ -1340,6 +1384,7 @@ export const deleteProfilesToMatches = /* GraphQL */ `
           nextToken
           __typename
         }
+        traits
         createdAt
         updatedAt
         __typename
@@ -1366,6 +1411,7 @@ export const deleteProfilesToMatches = /* GraphQL */ `
                 nextToken
                 __typename
               }
+              traits
               createdAt
               updatedAt
               __typename

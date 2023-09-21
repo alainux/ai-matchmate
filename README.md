@@ -658,7 +658,33 @@ _Note_: This structure is inspired by the "Big Five" personality traits, which i
 
 ##### Code implementation
 
-First we will augment our schema to include a `Messages` object that we will use to keep track of the user's conversation with the AI.
+###### Schema Changes for Messages
+
+First we will augment our schema to include a `Messages` type that we will use to keep track of the user's conversation with the AI.
 
 https://github.com/alainux/ai-matchmate/blob/1249870d8d27c8c6e9eaec43c62267cb4d198e32/app/amplify/backend/api/aimatchmate/schema.graphql#L40-L54
+
+
+###### Lambda for Answering Messages & Updating Personality Traits:
+
+When a user sends a message from the chat screen, we invoke this Lambda. It communicates with the OpenAI API, fetches a response, updates the user's psychological profile, and returns the next message (and occasionally a personality description).
+
+We will create an amplify function and configure it to have API access:
+
+```
+% amplify add function
+? Select which capability you want to add: Lambda function (serverless function)
+? Provide an AWS Lambda function name: createAiMessage
+? Choose the runtime that you want to use: NodeJS
+? Choose the function template that you want to use: Hello World
+? Do you want to configure advanced settings? No
+? Do you want to edit the local lambda function now? Yes
+✅ Successfully added resource createAiMessage locally.
+
+% amplify configure function
+? Select the Lambda function you want to update createAiMessage
+? Which setting do you want to update? Resource access permissions
+? Select the categories you want this function to have access to. api
+? Select the operations you want to permit on aimatchmate Mutation
+```
 
