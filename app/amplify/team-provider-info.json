@@ -27,7 +27,7 @@
         },
         "createAiMessage": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
-          "s3Key": "amplify-builds/createAiMessage-38344143426d44696152-build.zip",
+          "s3Key": "amplify-builds/createAiMessage-744c5a392f6d75386b64-build.zip",
           "secretsPathAmplifyAppId": "d1t0fgb897wtil"
         }
       },

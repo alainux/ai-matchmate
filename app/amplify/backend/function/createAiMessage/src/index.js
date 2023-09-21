@@ -69,7 +69,6 @@ async function updateProfileTraits(userId, traits) {
   }
 
   const resJSON = await res.json();
-  console.log('UPDATE TRAITS', resJSON);
 
   return resJSON;
 }
@@ -122,8 +121,6 @@ async function getRecentMessages(userId) {
     }))
     .reverse();
 
-  console.log('GET MESSAGES HISTORY', messagesProcessed);
-
   return messagesProcessed;
 }
 
@@ -170,7 +167,6 @@ async function createMessage(userId, messageContent, sender, metadata) {
   }
 
   const resJSON = await res.json();
-  console.log('CREATE MESSAGE', resJSON);
 
   return resJSON;
 }
@@ -192,7 +188,6 @@ const getOpenAIAPIKeySecret = async () => {
 
 // @ts-check
 exports.handler = async event => {
-  console.log('RECEIVED EVENT', JSON.stringify(event, null, 4));
 
   if (!event || !event.arguments) {
     return {
@@ -245,7 +240,6 @@ exports.handler = async event => {
       },
     ];
 
-    console.log('COMPLETIONS MESSAGES', JSON.stringify(completionsMessages, null, 4));
     const response = await openai.chat.completions.create({
       messages: completionsMessages,
       functions: [
@@ -303,14 +297,13 @@ exports.handler = async event => {
       user: userId,
     });
 
-    console.log('CHATGPT RESPONSE', JSON.stringify(response, null, 4));
     const responseChoice = response.choices[0];
     const responseArguments = JSON.parse(
       responseChoice.message.function_call.arguments,
     );
 
     // Create the user's message:
-    // await createMessage(userId, userMessage, 'USER');
+    await createMessage(userId, userMessage, 'USER');
 
     const { next_message, ...profile } = responseArguments;
     // Update the user's profile in the database
@@ -318,10 +311,10 @@ exports.handler = async event => {
       ...currentProfile,
       ...profile
     };
-    // await updateProfileTraits(userId, newProfile);
+    await updateProfileTraits(userId, newProfile);
 
     // Create response message:
-    // await createMessage(userId, responseArguments.next_message, 'AI', { profileSnapshot: newProfile });
+    await createMessage(userId, responseArguments.next_message, 'AI', { profileSnapshot: newProfile });
 
     return JSON.stringify({
       profile,

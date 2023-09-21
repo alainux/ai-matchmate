@@ -11,14 +11,11 @@ import { userSelector } from '../utils/aws';
 import {
   Message,
   MessagesByProfileIdAndCreatedAtQuery,
-  ModelSortDirection,
   SendChatMessageMutation,
   SenderType,
 } from '../types/graphql';
 import { GraphQLQuery } from '@aws-amplify/api';
 import { sendChatMessage } from '../graphql/mutations';
-import { messagesByProfileIdAndCreatedAt } from '../graphql/queries';
-import { Button } from '../components/Button';
 
 const ChatContainer = styled.View(({ theme }) => ({
   flex: 1,
@@ -86,16 +83,10 @@ export const ChatScreen: React.FC = () => {
         ([] as Message[]);
 
       if (!messages) {
-        console.log(
-          'no messages found for user',
-          { id },
-          JSON.stringify(result, null, 4),
-        );
         return;
       }
 
       setTraits(JSON.parse(traits));
-      console.log('MESSAGES', JSON.stringify(messages, null, 4))
       setChatlog(messages.reverse());
       scrollToEnd();
     } catch (e) {
@@ -129,16 +120,7 @@ export const ChatScreen: React.FC = () => {
       const reponseJSON = JSON.parse(
         response.data?.sendChatMessage ?? '{}',
       );
-
-      console.log(
-        'RESPONSE',
-        JSON.stringify(
-          reponseJSON,
-          null,
-          4,
-        ),
-      );
-
+      
       return reponseJSON as {
         nextMessage: string;
         profile: Record<string, any>;
