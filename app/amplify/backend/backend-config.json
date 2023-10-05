@@ -46,6 +46,15 @@
           "category": "function",
           "resourceName": "aimatchmate57a5e807PostConfirmation",
           "triggerProvider": "Cognito"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "aimatchmate57a5e807PostAuthentication",
+          "triggerProvider": "Cognito"
         }
       ],
       "frontendAuthConfig": {
@@ -73,6 +82,29 @@
     }
   },
   "function": {
+    "aimatchmate57a5e807PostAuthentication": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "createMatch"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "aimatchmate"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "aimatchmate57a5e807PostConfirmation": {
       "build": true,
       "dependsOn": [
@@ -108,29 +140,6 @@
     "createMatch": {
       "build": true,
       "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "aimatchmate"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "findMatches": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name"
-          ],
-          "category": "function",
-          "resourceName": "createMatch"
-        },
         {
           "attributes": [
             "GraphQLAPIIdOutput",
@@ -199,22 +208,6 @@
         {
           "category": "function",
           "resourceName": "createMatch"
-        }
-      ]
-    },
-    "AMPLIFY_function_findMatches_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "findMatches"
-        }
-      ]
-    },
-    "AMPLIFY_function_findMatches_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "findMatches"
         }
       ]
     }

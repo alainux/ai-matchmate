@@ -1,20 +1,42 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"12.4.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
-    "CloudWatchRule": {
+    "modules": {
       "Type": "String",
-      "Default": "NONE",
-      "Description": " Schedule Expression"
+      "Default": "",
+      "Description": "Comma-delimited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
     },
-    "deploymentBucketName": {
-      "Type": "String"
+    "resourceName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "trigger": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "functionName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "roleName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentResource": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentStack": {
+      "Type": "String",
+      "Default": ""
     },
     "env": {
       "Type": "String"
     },
-    "s3Key": {
-      "Type": "String"
+    "functioncreateMatchName": {
+      "Type": "String",
+      "Default": "functioncreateMatchName"
     },
     "apiaimatchmateGraphQLAPIIdOutput": {
       "Type": "String",
@@ -27,10 +49,6 @@
     "apiaimatchmateGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apiaimatchmateGraphQLAPIKeyOutput"
-    },
-    "functioncreateMatchName": {
-      "Type": "String",
-      "Default": "functioncreateMatchName"
     }
   },
   "Conditions": {
@@ -51,24 +69,16 @@
         "aws:asset:property": "Code"
       },
       "Properties": {
-        "Code": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": {
-            "Ref": "s3Key"
-          }
-        },
         "Handler": "index.handler",
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "findMatches",
+            "aimatchmate57a5e807PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "findMatches",
+                  "aimatchmate57a5e807PostAuthentication",
                   "-",
                   {
                     "Ref": "env"
@@ -83,8 +93,14 @@
             "ENV": {
               "Ref": "env"
             },
+            "MODULES": {
+              "Ref": "modules"
+            },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "FUNCTION_CREATEMATCH_NAME": {
+              "Ref": "functioncreateMatchName"
             },
             "API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT": {
               "Ref": "apiaimatchmateGraphQLAPIIdOutput"
@@ -94,9 +110,6 @@
             },
             "API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT": {
               "Ref": "apiaimatchmateGraphQLAPIKeyOutput"
-            },
-            "FUNCTION_CREATEMATCH_NAME": {
-              "Ref": "functioncreateMatchName"
             }
           }
         },
@@ -107,7 +120,6 @@
           ]
         },
         "Runtime": "nodejs18.x",
-        "Layers": [],
         "Timeout": 25
       }
     },
@@ -117,12 +129,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "aimatchmateLambdaRoleb8326c7a",
+            "aimatchmate57a5e807PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "aimatchmateLambdaRoleb8326c7a",
+                  "aimatchmate57a5e807PostAuthentication",
                   "-",
                   {
                     "Ref": "env"
@@ -193,45 +205,6 @@
         }
       }
     },
-    "CloudWatchEvent": {
-      "Type": "AWS::Events::Rule",
-      "Properties": {
-        "Description": "Schedule rule for Lambda",
-        "ScheduleExpression": {
-          "Ref": "CloudWatchRule"
-        },
-        "State": "ENABLED",
-        "Targets": [
-          {
-            "Arn": {
-              "Fn::GetAtt": [
-                "LambdaFunction",
-                "Arn"
-              ]
-            },
-            "Id": {
-              "Ref": "LambdaFunction"
-            }
-          }
-        ]
-      }
-    },
-    "PermissionForEventsToInvokeLambda": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "LambdaFunction"
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "events.amazonaws.com",
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "CloudWatchEvent",
-            "Arn"
-          ]
-        }
-      }
-    },
     "AmplifyResourcesPolicy": {
       "DependsOn": [
         "LambdaExecutionRole"
@@ -255,7 +228,8 @@
                 "lambda:Add*",
                 "lambda:Get*",
                 "lambda:List*",
-                "lambda:Invoke*"
+                "lambda:Invoke*",
+                "lambda:Update*"
               ],
               "Resource": [
                 {
@@ -346,19 +320,9 @@
         ]
       }
     },
-    "Region": {
-      "Value": {
-        "Ref": "AWS::Region"
-      }
-    },
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
-      }
-    },
-    "CloudWatchEventRule": {
-      "Value": {
-        "Ref": "CloudWatchEvent"
       }
     },
     "LambdaExecutionRoleArn": {
@@ -367,6 +331,11 @@
           "LambdaExecutionRole",
           "Arn"
         ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
       }
     }
   }

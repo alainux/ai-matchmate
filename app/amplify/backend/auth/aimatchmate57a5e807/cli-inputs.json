@@ -66,11 +66,23 @@
           "Arn",
           "Name"
         ]
+      },
+      {
+        "category": "function",
+        "resourceName": "aimatchmate57a5e807PostAuthentication",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
       }
     ],
     "userPoolGroups": false,
     "adminQueries": false,
     "triggers": {
+      "PostAuthentication": [
+        "custom"
+      ],
       "PostConfirmation": [
         "custom"
       ]
@@ -79,9 +91,9 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"aimatchmate57a5e807PostConfirmation\"\n  }\n]",
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostAuthentication\",\n    \"lambdaFunctionName\": \"aimatchmate57a5e807PostAuthentication\"\n  },\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"aimatchmate57a5e807PostConfirmation\"\n  }\n]",
     "permissions": [],
     "authProviders": [],
-    "thirdPartyAuth": true
+    "thirdPartyAuth": false
   }
 }

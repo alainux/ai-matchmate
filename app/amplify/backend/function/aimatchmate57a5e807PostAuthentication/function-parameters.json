@@ -1,0 +1,31 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "aimatchmate57a5e807",
+  "functionName": "aimatchmate57a5e807PostAuthentication",
+  "resourceName": "aimatchmate57a5e807PostAuthentication",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostAuthentication",
+  "triggerTemplate": "PostAuthentication.json.ejs",
+  "triggerEventPath": "PostAuthentication.event.json",
+  "roleName": "aimatchmate57a5e807PostAuthentication",
+  "skipEdit": true,
+  "permissions": {
+    "function": {
+      "createMatch": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "aimatchmate": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  }
+}

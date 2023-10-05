@@ -10,7 +10,6 @@ type LambdaResponse {
 
 type Mutation {
   sendChatMessage(userId: ID!, currentProfile: AWSJSON!, message: String!): LambdaResponse @function(name: "createAiMessage-${env}")
-  findMatches(userId: ID!): LambdaResponse @function(name: "findMatches-${env}")
 }
 
 enum Gender {
