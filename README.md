@@ -750,7 +750,15 @@ You can access the following resource attributes as environment variables from y
 
 ```
 
-**1. The Basic Implementation:**
-The most straightforward approach to determine matches is to compare each user profile with every other profile in the system. This method, while straightforward, has clear scalability concerns.
+**The Basic Implementation:**
+The most straightforward approach to determine matches is to compare each user profile with every other profile in the system. This method, while straightforward, has clear scalability concerns, however, for now, it will do:
+
+https://github.com/alainux/ai-matchmate/blob/84609ccff238fd39a0e8f505e6327ed1578e73c6/app/amplify/backend/function/findMatches/src/index.js#L1-L269
+
+We will also add a findMatches GraphQL mutation which will take care of creating the missing matches.
+
+https://github.com/alainux/ai-matchmate/blob/84609ccff238fd39a0e8f505e6327ed1578e73c6/app/amplify/backend/api/aimatchmate/schema.graphql#L13
+
+
 
 
