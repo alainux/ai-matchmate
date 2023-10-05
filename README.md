@@ -706,3 +706,51 @@ As shown in the image, the AI responds with a message and updates the state of t
 
 <img width="1374" alt="image" src="https://github.com/alainux/ai-matchmate/assets/6836149/cf4548b8-925b-4da2-8bc7-898c0d452ece">
 
+###### findMatches Lambda Matching Function
+
+**Matching Function**
+Our matchmaking system is central to our app's functionality. The goal is to find profiles that are most compatible based on their psychological traits, which have been continually refined through interactions with the AI.
+
+**Create the function using amplify:**
+
+```
+% amplify add function
+? Select which capability you want to add: Lambda function (serverless function)
+? Provide an AWS Lambda function name: findMatches
+? Choose the runtime that you want to use: NodeJS
+? Choose the function template that you want to use: Hello World
+
+✅ Available advanced settings:
+- Resource access permissions
+- Scheduled recurring invocation
+- Lambda layers configuration
+- Environment variables configuration
+- Secret values configuration
+
+? Do you want to configure advanced settings? Yes
+? Do you want to access other resources in this project from your Lambda function? Yes
+? Select the categories you want this function to have access to. api
+? Select the operations you want to permit on aimatchmate Query
+
+You can access the following resource attributes as environment variables from your Lambda function
+	API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT
+	API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT
+	API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT
+	ENV
+	REGION
+? Do you want to invoke this function on a recurring schedule? Yes
+? At which interval should the function be invoked: Daily
+? Select the start time in UTC (use arrow keys): 10:00 AM
+? Do you want to enable Lambda layers for this function? No
+? Do you want to configure environment variables for this function? No
+? Do you want to configure secret values this function can access? No
+✔ Choose the package manager that you want to use: · NPM
+? Do you want to edit the local lambda function now? No
+✅ Successfully added resource findMatches locally.
+
+```
+
+**1. The Basic Implementation:**
+The most straightforward approach to determine matches is to compare each user profile with every other profile in the system. This method, while straightforward, has clear scalability concerns.
+
+
