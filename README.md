@@ -714,51 +714,104 @@ Our matchmaking system is central to our app's functionality. The goal is to fin
 **Create the function using amplify:**
 
 ```
-% amplify add function
-? Select which capability you want to add: Lambda function (serverless function)
-? Provide an AWS Lambda function name: findMatches
-? Choose the runtime that you want to use: NodeJS
-? Choose the function template that you want to use: Hello World
+% amplify update auth
+Please note that certain attributes may not be overwritten if you choose to use defaults settings.
 
-✅ Available advanced settings:
-- Resource access permissions
-- Scheduled recurring invocation
-- Lambda layers configuration
-- Environment variables configuration
-- Secret values configuration
+You have configured resources that might depend on this Cognito resource.  Updating this Cognito resource could have unintended side effects.
 
-? Do you want to configure advanced settings? Yes
-? Do you want to access other resources in this project from your Lambda function? Yes
-? Select the categories you want this function to have access to. api
-? Select the operations you want to permit on aimatchmate Query
+Using service: Cognito, provided by: awscloudformation
+ What do you want to do? Walkthrough all the auth configurations
+ Select the authentication/authorization services that you want to use: User Sign-Up, Sign-In, connected with AWS IAM controls (Enables per-user Storage features for 
+images or other content, Analytics, and more)
+ Allow unauthenticated logins? (Provides scoped down permissions that you can control via AWS IAM) No
+ Do you want to enable 3rd party authentication providers in your identity pool? No
+ Do you want to add User Pool Groups? No
+ Do you want to add an admin queries API? No
+ Multifactor authentication (MFA) user login options: OFF
+ Email based user registration/forgot password: Enabled (Requires per-user email entry at registration)
+ Specify an email verification subject: Your verification code
+ Specify an email verification message: Your verification code is {####}
+ Do you want to override the default password policy for this User Pool? No
+ Specify the app's refresh token expiration period (in days): 30
+ Do you want to specify the user attributes this app can read and write? No
+ Do you want to enable any of the following capabilities? 
+ Do you want to use an OAuth flow? No
+? Do you want to configure Lambda Triggers for Cognito? Yes
+? Which triggers do you want to enable for Cognito Post Authentication, Post Confirmation
+? What functionality do you want to use for Post Authentication Create your own module
+? What functionality do you want to use for Post Confirmation Create your own module
+✅ Successfully added resource aimatchmateXXXPostAuthentication locally.
+
+✅ Next steps:
+Check out sample function code generated in <project-dir>/amplify/backend/function/aimatchmateXXXPostAuthentication/src
+"amplify function build" builds all of your functions currently in the project
+"amplify mock function <functionName>" runs your function locally
+To access AWS resources outside of this Amplify app, edit the /Users/alain/Developer/ai-matchmate/app/amplify/backend/function/aimatchmateXXXPostAuthentication/custom-policies.json
+"amplify push" builds all of your local backend resources and provisions them in the cloud
+"amplify publish" builds all of your local backend and front-end resources (if you added hosting category) and provisions them in the cloud
+Successfully added the Lambda function locally
+? Do you want to edit your custom function now? Yes
+Edit the file in your editor: /Users/alain/Developer/ai-matchmate/app/amplify/backend/function/aimatchmateXXXPostAuthentication/src/custom.js
+? Press enter to continue 
+Successfully updated the Cognito trigger locally
+✅ Successfully updated auth resource aimatchmate57a5e807 locally
+
+✅ Some next steps:
+"amplify push" will build all your local backend resources and provision it in the cloud
+"amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
+
+✅ Successfully updated resource update locally
+
+✅ Some next steps:
+"amplify push" will build all your local backend resources and provision it in the cloud
+"amplify publish" will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud
+```
+
+Next, add the required permissions:
+
+```
+% amplify update function
+? Select the Lambda function you want to update aimatchmateXXXPostAuthentication
+General information
+- Name: aimatchmate57a5e807PostAuthentication
+- Runtime: nodejs
+
+Resource access permission
+- Not configured
+
+Scheduled recurring invocation
+- Not configured
+
+Lambda layers
+- Not configured
+
+Environment variables:
+- Not configured
+
+Secrets configuration
+- Not configured
+
+? Which setting do you want to update? Resource access permissions
+? Select the categories you want this function to have access to. function, api
+? Function has 4 resources in this project. Select the one you would like your Lambda to access createMatch
+? Select the operations you want to permit on createMatch create, read, update
+? Select the operations you want to permit on aimatchmate Query, Mutation
 
 You can access the following resource attributes as environment variables from your Lambda function
 	API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT
 	API_AIMATCHMATE_GRAPHQLAPIIDOUTPUT
 	API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT
-	ENV
-	REGION
-? Do you want to invoke this function on a recurring schedule? Yes
-? At which interval should the function be invoked: Daily
-? Select the start time in UTC (use arrow keys): 10:00 AM
-? Do you want to enable Lambda layers for this function? No
-? Do you want to configure environment variables for this function? No
-? Do you want to configure secret values this function can access? No
-✔ Choose the package manager that you want to use: · NPM
+	FUNCTION_CREATEMATCH_NAME
 ? Do you want to edit the local lambda function now? No
-✅ Successfully added resource findMatches locally.
 
 ```
 
 **The Basic Implementation:**
 The most straightforward approach to determine matches is to compare each user profile with every other profile in the system. This method, while straightforward, has clear scalability concerns, however, for now, it will do:
 
-https://github.com/alainux/ai-matchmate/blob/84609ccff238fd39a0e8f505e6327ed1578e73c6/app/amplify/backend/function/findMatches/src/index.js#L1-L269
+https://github.com/alainux/ai-matchmate/blob/c88000b35c8ae87ab3dbdada1a6dc16458f622fc/app/amplify/backend/function/aimatchmate57a5e807PostAuthentication/src/custom.js#L1-L261
 
-We will also add a findMatches GraphQL mutation which will take care of creating the missing matches.
-
-https://github.com/alainux/ai-matchmate/blob/84609ccff238fd39a0e8f505e6327ed1578e73c6/app/amplify/backend/api/aimatchmate/schema.graphql#L13
-
+This will take care of finding and creating matches after logging in.
 
 
 
