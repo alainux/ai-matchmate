@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "function": {
+      "createMatch": [
+        "create",
+        "read"
+      ]
+    },
+    "api": {
+      "aimatchmate": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

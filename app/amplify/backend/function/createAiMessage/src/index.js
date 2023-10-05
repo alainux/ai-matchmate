@@ -316,10 +316,13 @@ exports.handler = async event => {
     // Create response message:
     await createMessage(userId, responseArguments.next_message, 'AI', { profileSnapshot: newProfile });
 
-    return JSON.stringify({
-      profile,
-      nextMessage: next_message,
-    });
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        profile,
+        nextMessage: next_message,
+      })
+    };
   } catch (e) {
     return {
       statusCode: 500,

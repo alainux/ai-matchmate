@@ -4,10 +4,10 @@ import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { colord } from 'colord';
 import { disable } from '../utils/theme';
 
-type ButtonProps = { secondary?: boolean; icon?: React.ReactNode };
+export type ButtonProps = { secondary?: boolean; icon?: React.ReactNode } &  TouchableOpacityProps;
 
 const StyledButton: React.FC<
-  React.PropsWithChildren<ButtonProps & TouchableOpacityProps>
+  React.PropsWithChildren<ButtonProps>
 > = styled(TouchableOpacity)(({ theme, disabled, secondary }) => ({
   flexDirection: 'row',
   alignItems: 'center',
@@ -38,7 +38,7 @@ const StyledButton: React.FC<
 
 const ButtonText: React.FC<
   React.PropsWithChildren<ButtonProps & TouchableOpacityProps>
-> = styled.Text(({ secondary, disabled, theme }) => ({
+> = styled.Text(({ secondary, disabled, icon, theme }) => ({
   color: secondary
     ? theme.tokens.buttonSecondaryText
     : theme.tokens.buttonPrimaryText,
@@ -51,7 +51,7 @@ const ButtonText: React.FC<
       }
     : {}),
 
-  marginLeft: 10,
+  ...(icon ? { marginLeft: 10 } : {}),
 
   ...theme.text.variations.base,
 }));
@@ -61,7 +61,7 @@ export const Button: React.FC<
 > = ({ children, icon, secondary, disabled, ...props }) => (
   <StyledButton disabled={disabled} secondary={secondary} {...props}>
     {icon ?? null}
-    <ButtonText disabled={disabled} secondary={secondary}>
+    <ButtonText disabled={disabled} icon={icon} secondary={secondary}>
       {children}
     </ButtonText>
   </StyledButton>

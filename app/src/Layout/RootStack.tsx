@@ -2,16 +2,17 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SplashScreen } from '../screens/SplashScreen';
-import { TabsLayout } from './TabsLayout';
+import { TabsLayout, TabsLayoutScreenParams } from './TabsLayout';
 import { MatchDetailsScreen } from '../screens/MatchDetailsScreen';
-import { matchesData } from '../utils/data';
 import { theme } from '../utils/theme';
 import { Profile } from '../types/graphql';
+import OnboardingStack from './OnboardingStack';
 
 export type RootStackParamList = {
   Splash: undefined;
-  TabsLayout: undefined;
-  MatchDetails: { match: Profile };
+  TabsLayout: TabsLayoutScreenParams;
+  MatchDetails: { match: Profile, data: { matchId: string, profileToMatchesIds: string[]} };
+  OnboardingStack: undefined
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -19,7 +20,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export const RootStack: React.FC = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Splash"
+      initialRouteName='TabsLayout'
       screenOptions={{
         ...theme.navigation.header,
       }}>
@@ -37,6 +38,11 @@ export const RootStack: React.FC = () => {
         name="MatchDetails"
         component={MatchDetailsScreen}
         options={{ headerTitle: 'Match Details', headerBackTitle: '' }}
+      />
+      <Stack.Screen
+        name="OnboardingStack"
+        component={OnboardingStack}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

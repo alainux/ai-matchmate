@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styled from '@emotion/native';
-import { PLACEHOLDER_IMAGE, matchesData } from '../utils/data';
+import { PLACEHOLDER_IMAGE } from '../utils/data';
 import { useNavigation } from '../hooks/useNavigation';
-import { GetProfileQuery, Profile, ProfilesToMatches } from '../types/graphql';
+import { Profile, ProfilesToMatches } from '../types/graphql';
 import { API } from 'aws-amplify';
 import { GraphQLQuery } from '@aws-amplify/api';
 import { useAuthenticator } from '@aws-amplify/ui-react-native';
@@ -33,17 +33,20 @@ const MatchImage = styled.Image(({ theme }) => ({
   marginRight: theme.tokens.spacer,
 }));
 
-const MatchName = styled.Text(({ theme }) => ({
-  flex: 1,
+const CardTitle = styled.Text(({ theme }) => ({
   color: theme.tokens.textInverted,
   ...theme.text.variations.strongLarge,
-  marginBottom: theme.tokens.spacer,
+  marginBottom: theme.baseUnit,
 }));
 
-const MatchBio = styled.Text(({ theme }) => ({
+const CardText = styled.Text(({ theme }) => ({
   color: theme.tokens.textInverted,
   flex: 1,
   ...theme.text.variations.base,
+}));
+
+const Strong = styled(CardText)(({ theme }) => ({
+  ...theme.text.variations.strong,
 }));
 
 const MatchContent = styled.View({
@@ -62,6 +65,7 @@ query GetProfile($id: ID!) {
         match {
           __typename
           id
+          compatibility
           profiles {
             items {
               __typename
@@ -83,6 +87,13 @@ query GetProfile($id: ID!) {
   } 
 }`;
 
+const Text = styled.Text(({ theme }) => ({
+  ...theme.text.variations.base,
+  color: theme.tokens.text
+}));
+
+const pcg = (n?: number | null) => `${((n??0) * 100).toFixed(1)}%`;
+
 export const MatchesScreen: React.FC = () => {
   const navigation = useNavigation();
   const { user } = useAuthenticator(userSelector);
@@ -93,13 +104,14 @@ export const MatchesScreen: React.FC = () => {
   const fetchMatches = async (id: string) => {
     setLoading(true);
     try {
-      const result = await API.graphql<GraphQLQuery<GetProfileQuery>>({
+      const result = await API.graphql<GraphQLQuery<any>>({
         query: getProfileMatches,
         variables: {
           id: id,
         },
       });
 
+      console.log('MATCHES RES', JSON.stringify(result, null, 4))
       const matches = (result?.data?.getProfile?.matches?.items ?? []).filter(
         Boolean,
       ) as ProfilesToMatches[];
@@ -133,10 +145,10 @@ export const MatchesScreen: React.FC = () => {
       </MatchesContainer>
     );
   } else if (!matches.length) {
-    return <MatchesContainer>{/* No matches */}</MatchesContainer>;
+    return <MatchesContainer style={{ alignItems: 'center'}}><Text>Your matches will show up here.</Text></MatchesContainer>;
   }
 
-  const userFromMatch = (item: ProfilesToMatches): Profile => {
+  const userFromMatch = (item: ProfilesToMatches): {profile: Profile, data: { matchId: string, profileToMatchesIds: string[]}} => {
     const userFromMatch: Profile | undefined =
       item?.match?.profiles?.items.find(
         profileToMatch => profileToMatch?.profile.id !== user?.attributes?.sub,
@@ -145,7 +157,11 @@ export const MatchesScreen: React.FC = () => {
     if (!userFromMatch) {
       throw new Error('No user from match');
     }
-    return userFromMatch;
+
+    const matchId = item?.match?.id;
+    const profileToMatchesIds = item?.match?.profiles?.items?.map((p2m) => p2m?.id).filter((id): id is string => Boolean(id)) ?? [];
+
+    return { profile: userFromMatch, data: { matchId, profileToMatchesIds }};
   };
 
   return (
@@ -156,13 +172,14 @@ export const MatchesScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
-          const matchUserProfile = userFromMatch(item);
+          const {profile: matchUserProfile, data} = userFromMatch(item);
           return (
             <MatchCard
               activeOpacity={0.9}
               onPress={() => {
                 navigation.navigate('MatchDetails', {
                   match: matchUserProfile,
+                  data: data,
                 });
               }}>
               <MatchImage
@@ -171,8 +188,9 @@ export const MatchesScreen: React.FC = () => {
                 }}
               />
               <MatchContent>
-                <MatchName>{matchUserProfile.name}</MatchName>
-                <MatchBio>{matchUserProfile.bio}</MatchBio>
+                <CardTitle>{matchUserProfile.name}</CardTitle>
+                <CardText>{matchUserProfile.bio}</CardText>
+                <CardText><Strong>Compatibility</Strong>: {pcg(item?.match?.compatibility) }</CardText>
               </MatchContent>
             </MatchCard>
           );

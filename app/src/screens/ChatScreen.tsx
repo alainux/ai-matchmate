@@ -57,9 +57,7 @@ export const ChatScreen: React.FC = () => {
   const fetchMessages = async (id: string) => {
     setLoading(true);
     try {
-      const result = await API.graphql<
-        GraphQLQuery<MessagesByProfileIdAndCreatedAtQuery>
-      >({
+      const result = await API.graphql< GraphQLQuery<any> >({
         query: `query GetMessages($profileId: ID!) {
           messagesByProfileIdAndCreatedAt(profileId: $profileId, sortDirection: DESC, limit: 10) {
             items {
@@ -68,6 +66,9 @@ export const ChatScreen: React.FC = () => {
               metadata
               sender
               createdAt
+              profile {
+                traits
+              }
             }
           }
         }`,
@@ -118,7 +119,7 @@ export const ChatScreen: React.FC = () => {
       );
 
       const reponseJSON = JSON.parse(
-        response.data?.sendChatMessage ?? '{}',
+        response.data?.sendChatMessage?.body ?? '{}',
       );
       
       return reponseJSON as {

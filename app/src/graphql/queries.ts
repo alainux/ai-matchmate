@@ -8,130 +8,24 @@ export const getProfile = /* GraphQL */ `
       id
       name
       email
+      age
+      gender
       bio
       contactInfo
       profileImage
       matches {
-        items {
-          id
-          profileId
-          matchId
-          profile {
-            id
-            name
-            email
-            bio
-            contactInfo
-            profileImage
-            matches {
-              items {
-                id
-                profileId
-                matchId
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            messages {
-              items {
-                id
-                profileId
-                content
-                sender
-                metadata
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            traits
-            createdAt
-            updatedAt
-            __typename
-          }
-          match {
-            id
-            profiles {
-              items {
-                id
-                profileId
-                matchId
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
       messages {
-        items {
-          id
-          profileId
-          profile {
-            id
-            name
-            email
-            bio
-            contactInfo
-            profileImage
-            matches {
-              items {
-                id
-                profileId
-                matchId
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            messages {
-              items {
-                id
-                profileId
-                content
-                sender
-                metadata
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            traits
-            createdAt
-            updatedAt
-            __typename
-          }
-          content
-          sender
-          metadata
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
       traits
+      onboarded
+      minAgePreference
+      maxAgePreference
+      genderPreference
       createdAt
       updatedAt
       __typename
@@ -149,86 +43,16 @@ export const listProfiles = /* GraphQL */ `
         id
         name
         email
+        age
+        gender
         bio
         contactInfo
         profileImage
-        matches {
-          items {
-            id
-            profileId
-            matchId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            match {
-              id
-              profiles {
-                nextToken
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
-        messages {
-          items {
-            id
-            profileId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            content
-            sender
-            metadata
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
         traits
+        onboarded
+        minAgePreference
+        maxAgePreference
+        genderPreference
         createdAt
         updatedAt
         __typename
@@ -243,73 +67,10 @@ export const getMatch = /* GraphQL */ `
     getMatch(id: $id) {
       id
       profiles {
-        items {
-          id
-          profileId
-          matchId
-          profile {
-            id
-            name
-            email
-            bio
-            contactInfo
-            profileImage
-            matches {
-              items {
-                id
-                profileId
-                matchId
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            messages {
-              items {
-                id
-                profileId
-                content
-                sender
-                metadata
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            traits
-            createdAt
-            updatedAt
-            __typename
-          }
-          match {
-            id
-            profiles {
-              items {
-                id
-                profileId
-                matchId
-                createdAt
-                updatedAt
-                __typename
-              }
-              nextToken
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          createdAt
-          updatedAt
-          __typename
-        }
         nextToken
         __typename
       }
+      compatibility
       createdAt
       updatedAt
       __typename
@@ -325,48 +86,7 @@ export const listMatches = /* GraphQL */ `
     listMatches(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        profiles {
-          items {
-            id
-            profileId
-            matchId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            match {
-              id
-              profiles {
-                nextToken
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
+        compatibility
         createdAt
         updatedAt
         __typename
@@ -385,86 +105,16 @@ export const getMessage = /* GraphQL */ `
         id
         name
         email
+        age
+        gender
         bio
         contactInfo
         profileImage
-        matches {
-          items {
-            id
-            profileId
-            matchId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            match {
-              id
-              profiles {
-                nextToken
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
-        messages {
-          items {
-            id
-            profileId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            content
-            sender
-            metadata
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
         traits
+        onboarded
+        minAgePreference
+        maxAgePreference
+        genderPreference
         createdAt
         updatedAt
         __typename
@@ -488,74 +138,6 @@ export const listMessages = /* GraphQL */ `
       items {
         id
         profileId
-        profile {
-          id
-          name
-          email
-          bio
-          contactInfo
-          profileImage
-          matches {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          messages {
-            items {
-              id
-              profileId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              content
-              sender
-              metadata
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          traits
-          createdAt
-          updatedAt
-          __typename
-        }
         content
         sender
         metadata
@@ -588,74 +170,6 @@ export const messagesByProfileIdAndCreatedAt = /* GraphQL */ `
       items {
         id
         profileId
-        profile {
-          id
-          name
-          email
-          bio
-          contactInfo
-          profileImage
-          matches {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          messages {
-            items {
-              id
-              profileId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              content
-              sender
-              metadata
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          traits
-          createdAt
-          updatedAt
-          __typename
-        }
         content
         sender
         metadata
@@ -678,134 +192,23 @@ export const getProfilesToMatches = /* GraphQL */ `
         id
         name
         email
+        age
+        gender
         bio
         contactInfo
         profileImage
-        matches {
-          items {
-            id
-            profileId
-            matchId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            match {
-              id
-              profiles {
-                nextToken
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
-        messages {
-          items {
-            id
-            profileId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            content
-            sender
-            metadata
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
         traits
+        onboarded
+        minAgePreference
+        maxAgePreference
+        genderPreference
         createdAt
         updatedAt
         __typename
       }
       match {
         id
-        profiles {
-          items {
-            id
-            profileId
-            matchId
-            profile {
-              id
-              name
-              email
-              bio
-              contactInfo
-              profileImage
-              matches {
-                nextToken
-                __typename
-              }
-              messages {
-                nextToken
-                __typename
-              }
-              traits
-              createdAt
-              updatedAt
-              __typename
-            }
-            match {
-              id
-              profiles {
-                nextToken
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            createdAt
-            updatedAt
-            __typename
-          }
-          nextToken
-          __typename
-        }
+        compatibility
         createdAt
         updatedAt
         __typename
@@ -831,110 +234,6 @@ export const listProfilesToMatches = /* GraphQL */ `
         id
         profileId
         matchId
-        profile {
-          id
-          name
-          email
-          bio
-          contactInfo
-          profileImage
-          matches {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          messages {
-            items {
-              id
-              profileId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              content
-              sender
-              metadata
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          traits
-          createdAt
-          updatedAt
-          __typename
-        }
-        match {
-          id
-          profiles {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -963,110 +262,6 @@ export const profilesToMatchesByProfileId = /* GraphQL */ `
         id
         profileId
         matchId
-        profile {
-          id
-          name
-          email
-          bio
-          contactInfo
-          profileImage
-          matches {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          messages {
-            items {
-              id
-              profileId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              content
-              sender
-              metadata
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          traits
-          createdAt
-          updatedAt
-          __typename
-        }
-        match {
-          id
-          profiles {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -1095,110 +290,6 @@ export const profilesToMatchesByMatchId = /* GraphQL */ `
         id
         profileId
         matchId
-        profile {
-          id
-          name
-          email
-          bio
-          contactInfo
-          profileImage
-          matches {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          messages {
-            items {
-              id
-              profileId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              content
-              sender
-              metadata
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          traits
-          createdAt
-          updatedAt
-          __typename
-        }
-        match {
-          id
-          profiles {
-            items {
-              id
-              profileId
-              matchId
-              profile {
-                id
-                name
-                email
-                bio
-                contactInfo
-                profileImage
-                traits
-                createdAt
-                updatedAt
-                __typename
-              }
-              match {
-                id
-                createdAt
-                updatedAt
-                __typename
-              }
-              createdAt
-              updatedAt
-              __typename
-            }
-            nextToken
-            __typename
-          }
-          createdAt
-          updatedAt
-          __typename
-        }
         createdAt
         updatedAt
         __typename

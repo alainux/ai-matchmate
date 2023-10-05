@@ -14,7 +14,7 @@ export const SplashScreen: React.FC = () => {
   const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('TabsLayout');
+      navigation.navigate('TabsLayout', { initialRouteName: 'Chat' });
     }, 2000);
   }, [navigation]);
 

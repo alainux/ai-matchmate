@@ -2,8 +2,21 @@ input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 }
 
+type LambdaResponse {
+  statusCode: Int
+  body: AWSJSON
+  error: String
+}
+
 type Mutation {
-  sendChatMessage(userId: ID!, currentProfile: AWSJSON!, message: String!): String @function(name: "createAiMessage-${env}")
+  sendChatMessage(userId: ID!, currentProfile: AWSJSON!, message: String!): LambdaResponse @function(name: "createAiMessage-${env}")
+  findMatches(userId: ID!): LambdaResponse @function(name: "findMatches-${env}")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 type Profile
@@ -17,12 +30,19 @@ type Profile
   id: ID!
   name: String!
   email: String!
+  age: Int
+  gender: Gender
   bio: String
   contactInfo: String
   profileImage: String
   matches: [Match!]! @manyToMany(relationName: "ProfilesToMatches")
   messages: [Message!]! @hasMany(indexName: "byProfile", fields: ["id"])
   traits: AWSJSON
+  
+  onboarded: Boolean
+  minAgePreference: Int
+  maxAgePreference: Int
+  genderPreference: Gender
 }
 
 type Match
@@ -30,11 +50,12 @@ type Match
   @auth(
     rules: [
       { allow: public, provider: apiKey }
-      { allow: private, operations: [read], provider: userPools }
+      { allow: private, operations: [read, delete], provider: userPools }
     ]
   ) {
   id: ID!
   profiles: [Profile!]! @manyToMany(relationName: "ProfilesToMatches")
+  compatibility: Float
 }
 
 enum SenderType {

@@ -9,17 +9,20 @@ Amplify Params - DO NOT EDIT */
 const GRAPHQL_ENDPOINT = process.env.API_AIMATCHMATE_GRAPHQLAPIENDPOINTOUTPUT;
 const GRAPHQL_API_KEY = process.env.API_AIMATCHMATE_GRAPHQLAPIKEYOUTPUT;
 
-async function createMatch() {
+async function createMatch({ compatibility }) {
   const query = /* GraphQL */ `
     mutation CreateMatch($input: CreateMatchInput!) {
       createMatch(input: $input) {
         id
+        compatibility
       }
     }
   `;
 
   const variables = {
-    input: {},
+    input: {
+      compatibility: compatibility,
+    },
   };
 
   const options = {
@@ -68,12 +71,20 @@ async function assignProfilesToMatch(matchId, profileId) {
  */
 exports.handler = async event => {
   console.log(`CREATE MATCH EVENT: ${JSON.stringify(event)}`);
+
+  if (!event.profileIds || !event.compatibility) {
+    return {
+      statusCode: 400,
+      body: 'Missing profileIds or compatibility',
+    };
+  }
+
   const response = {
     data: {}
   };
 
   try {
-    const matchResponse = await createMatch();
+    const matchResponse = await createMatch({ compatibility: event.compatibility });
     const match = await matchResponse.json();
     response.data.createMatch = match.data.createMatch;
 

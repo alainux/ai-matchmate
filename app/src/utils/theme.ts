@@ -43,9 +43,11 @@ const colors = {
 
 export const lighter = (hex: string) => colord(hex).lighten(0.1).toHex();
 export const disable = (hex: string) => colord(hex).desaturate(0.5).toHex();
+export const opacity = (hex: string) => colord(hex).alpha(0.7).toHex();
 
 const themeTokens = {
   text: colors.greyDark,
+  textSubtle: opacity(colors.greyDark),
   textPrimary: colors.red,
   textInverted: colors.dark,
 

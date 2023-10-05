@@ -19,7 +19,7 @@
       "function": {
         "createMatch": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
-          "s3Key": "amplify-builds/createMatch-524b44493762566b4438-build.zip"
+          "s3Key": "amplify-builds/createMatch-4d79476e6242516c7365-build.zip"
         },
         "aimatchmate57a5e807PostConfirmation": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
@@ -27,8 +27,12 @@
         },
         "createAiMessage": {
           "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
-          "s3Key": "amplify-builds/createAiMessage-744c5a392f6d75386b64-build.zip",
+          "s3Key": "amplify-builds/createAiMessage-6d7062416450454e7831-build.zip",
           "secretsPathAmplifyAppId": "d1t0fgb897wtil"
+        },
+        "findMatches": {
+          "deploymentBucketName": "amplify-aimatchmate-dev-141347-deployment",
+          "s3Key": "amplify-builds/findMatches-6a6f6c64566c67385052-build.zip"
         }
       },
       "api": {

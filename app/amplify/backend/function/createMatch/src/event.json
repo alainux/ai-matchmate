@@ -1,3 +1,7 @@
 {
-  "profileIds": ["value1", "value2"]
+  "profileIds": [
+    "675a6c16-b99c-4a54-8df6-9e3a7a420ba5",
+    "dfe1c991-8739-411a-9298-b66df620e861"
+  ],
+  "compatibility": 0.9199999999999999
 }
