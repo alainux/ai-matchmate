@@ -813,5 +813,13 @@ https://github.com/alainux/ai-matchmate/blob/c88000b35c8ae87ab3dbdada1a6dc16458f
 
 This will take care of finding and creating matches after logging in.
 
+#### Final frontend fixes and tweaks
+
+##### 1. Onboarding
+
+nboarding is crucial for any app, especially one that requires users to input personal information. It sets the tone, clarifies the app's purpose, and guides users through the setup process. For AI MatchMate, the onboarding process will look something like this:
+
+![onboarding](https://github.com/alainux/ai-matchmate/assets/6836149/af3899c4-8645-4f6a-9eb4-02d4e5a3e2b8)
+
 
 
